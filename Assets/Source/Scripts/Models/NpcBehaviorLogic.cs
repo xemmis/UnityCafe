@@ -1,22 +1,39 @@
+using Core.Dialogue;
 using Core;
 using Specs;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
+using Models.States;
 
 namespace Models
 {
-    public class NpcBehaviorLogic : MonoBehaviour, IPointerClickHandler
+    public sealed class NpcBehaviorLogic : MonoBehaviour, IPointerClickHandler
     {
+        [SerializeField] private Sprite _npcIcon = null;
         private readonly Queue<IState> _stateQueue = new();
-        private IState _currentState = null;
-        private NpcSO _npcSO = null;
+        private NavMeshAgent _agent = null;
+        private Animator _animator = null;
+        private ActionsSO _npcSO = null;
         private NpcAction _currentAction = null;
+        private IState _currentState = null;
         private DialogueMood _currentMood;
+
+        public NavMeshAgent Agent => _agent;
+        public Animator Animator => _animator;
 
         private void Awake()
         {
             SetRandomMood();
+
+            InitializeComponents();
+        }
+
+        private void InitializeComponents()
+        {
+            TryGetComponent<NavMeshAgent>(out _agent);
+            TryGetComponent<Animator>(out _animator);
         }
 
         private void SetRandomMood()
@@ -26,13 +43,28 @@ namespace Models
             _currentMood = moods[Random.Range(0, moods.Length)];
         }
 
-        public void Initialize(NpcSO npcSO)
+        public bool HasActions()
+        {
+            return _currentAction != null;
+        }
+
+        public void Initialize(ActionsSO npcSO)
         {
             _npcSO = npcSO;
+            int rand = Random.Range(0, npcSO.Actions.Count - 1);
 
-            foreach (NpcAction npcAction in npcSO.Actions)
+            foreach (NpcAction npcAction in npcSO.Actions[rand].Actions)
             {
-                IState state = NpcStateFabric.CreateState(npcAction.StateType);
+                IState state = NpcStateFabric.CreateState(npcAction);
+                _stateQueue.Enqueue(state);
+            }
+        }
+
+        public void Initialize(List<NpcAction> actions)
+        {
+            foreach (NpcAction npcAction in actions)
+            {
+                IState state = NpcStateFabric.CreateState(npcAction);
                 _stateQueue.Enqueue(state);
             }
         }
@@ -52,8 +84,8 @@ namespace Models
             else
             {
                 _stateQueue.Clear();
-                // TODO EXITSTATE!!
-                // ApplyState(_stateQueue.Dequeue());
+                _stateQueue.Enqueue(new ExitState());
+                ApplyState(_stateQueue.Dequeue());
             }
         }
 
@@ -73,11 +105,11 @@ namespace Models
         {
             if (_currentAction.Dialogue == null)
             {
-                DialogueSystem.Instance.StartDialogue(_currentMood, _npcSO.NpcIcon);
+                DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
             }
             else
             {
-                DialogueSystem.Instance.StartDialogue(_currentAction.Dialogue, _npcSO.NpcIcon);
+                DialogueSystem.Instance.StartDialogue(_currentAction.Dialogue, _npcIcon);
             }
         }
     }

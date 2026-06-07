@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1794862997456764247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527015341095371162}
+  - component: {fileID: 8485236168772950844}
+  m_Layer: 0
+  m_Name: NpcFabric
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527015341095371162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794862997456764247}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.26205, y: -0.07143, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8485236168772950844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794862997456764247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8fce528322796a48ac0fdbe99d8ab71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.NpcFabric
+  _npcDatas:
+  - {fileID: 11400000, guid: 53446c7ee9fdebd4aa7a3c8c9519984b, type: 2}
+  - {fileID: 11400000, guid: 2d4b7c3cd05c51841920f21e4b1ce680, type: 2}
+  - {fileID: 11400000, guid: b32248da7f7c18c40a5dbad0369225c3, type: 2}
+  - {fileID: 11400000, guid: 986fa394893597f4c842d90b740ce0ab, type: 2}
+  - {fileID: 11400000, guid: 43f384cadc669724695f68a3cb1a9eee, type: 2}
+  - {fileID: 11400000, guid: 9edea4d9b2cfb1f4ca74bfdef42615d4, type: 2}
+  - {fileID: 11400000, guid: 2996d045812655e49b6f90dc4f49d12e, type: 2}
+  _initialPoolSize: 5
+  _maxPoolSize: 20
+  _actionsSo: {fileID: 11400000, guid: 79b42d0ce9ba05043b789475465d03eb, type: 2}

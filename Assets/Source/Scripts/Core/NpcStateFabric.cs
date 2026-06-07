@@ -1,5 +1,5 @@
 using Models;
-using NUnit.Framework;
+using Models.States;
 using Specs;
 using UnityEngine;
 
@@ -7,16 +7,14 @@ namespace Core
 {
     public static class NpcStateFabric
     {
-        public static IState CreateState(StateType type)
+        public static IState CreateState(NpcAction action)
         {
-            switch (type)
+            switch (action.StateType)
             {
                 case StateType.Idle:
-                    Debug.Log("Idle not realizet yet");
-                    break;
+                    return new IdleState(action.IntData);
                 case StateType.Walk:
-                    Debug.Log("Walk not realizet yet");
-                    break;
+                    return new WalkState(action.WalkType);
                 case StateType.MakeOrder:
                     Debug.Log("MakeOrder not realizet yet");
                     break;
@@ -32,6 +30,6 @@ namespace Core
             }
 
             return null;
-        }        
+        }
     }
 }
