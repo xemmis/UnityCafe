@@ -17,20 +17,25 @@ MonoBehaviour:
     - <Dialogue>k__BackingField: {fileID: 0}
       <StateType>k__BackingField: 2
       <WalkType>k__BackingField: 0
-      <FoodTypes>k__BackingField: 
+      <FoodRecipe>k__BackingField: {fileID: 0}
+      <IntData>k__BackingField: 0
     - <Dialogue>k__BackingField: {fileID: 0}
       <StateType>k__BackingField: 0
       <WalkType>k__BackingField: 0
-      <FoodTypes>k__BackingField: 
+      <FoodRecipe>k__BackingField: {fileID: 0}
+      <IntData>k__BackingField: 0
     - <Dialogue>k__BackingField: {fileID: 0}
       <StateType>k__BackingField: 0
       <WalkType>k__BackingField: 0
-      <FoodTypes>k__BackingField: 
+      <FoodRecipe>k__BackingField: {fileID: 0}
+      <IntData>k__BackingField: 0
     - <Dialogue>k__BackingField: {fileID: 0}
       <StateType>k__BackingField: 0
       <WalkType>k__BackingField: 0
-      <FoodTypes>k__BackingField: 
+      <FoodRecipe>k__BackingField: {fileID: 0}
+      <IntData>k__BackingField: 0
     - <Dialogue>k__BackingField: {fileID: 0}
       <StateType>k__BackingField: 0
       <WalkType>k__BackingField: 0
-      <FoodTypes>k__BackingField: 
+      <FoodRecipe>k__BackingField: {fileID: 0}
+      <IntData>k__BackingField: 0

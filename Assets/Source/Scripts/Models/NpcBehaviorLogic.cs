@@ -12,6 +12,7 @@ namespace Models
     public sealed class NpcBehaviorLogic : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Sprite _npcIcon = null;
+        [SerializeField] private bool _isEmploye = false;
         private readonly Queue<IState> _stateQueue = new();
         private NavMeshAgent _agent = null;
         private Animator _animator = null;
@@ -28,6 +29,12 @@ namespace Models
             SetRandomMood();
 
             InitializeComponents();
+        }
+
+        private void Start()
+        {
+            if (_isEmploye)
+                EmployeeManager.RegisterEmployee(this);
         }
 
         private void InitializeComponents()

@@ -6,6 +6,7 @@ namespace Models
         Walk,
         MakeOrder,
         Vibing,
-        Leave
+        Leave,
+        Cook
     }
 }

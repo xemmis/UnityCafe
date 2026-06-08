@@ -1,15 +1,13 @@
-using Specs;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Models
 {
-    public sealed class IngredientItem : MonoBehaviour
+    [CreateAssetMenu(fileName = "Ingredient", menuName = "Food/New Ingredient")]
+    public sealed class IngredientItem : ScriptableObject
     {
         [field: SerializeField] public Sprite Icon { get; private set; } = null;
         [field: SerializeField] public FoodPrefer IngredientType { get; private set; }
         [field: SerializeField] public string Name { get; private set; }
-        private ICraftingCell _currentCell;
 
         public int Id;
         public override bool Equals(object obj)

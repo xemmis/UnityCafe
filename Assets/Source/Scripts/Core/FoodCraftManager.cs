@@ -1,5 +1,4 @@
 ﻿using Models;
-using Specs;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,8 +7,24 @@ namespace Core
 {
     public sealed class FoodCraftManager : MonoBehaviour
     {
-        public static FoodCraftManager Instance = null;
+        [SerializeField] private List<IngredientItem> _startIngredients = new();
+        [SerializeField] private List<FoodRecipe> _recipes = new();
         private Dictionary<FoodRecipe, FoodItem> _foodDict = new();
+
+        public static FoodCraftManager Instance = null;
+
+        private void Start()
+        {
+            foreach (IngredientItem ingredientItem in _startIngredients)
+            {
+                BakeryInventory.Add(ingredientItem);
+            }
+
+            foreach (FoodRecipe foodRecipe in _recipes)
+            {
+                RegisterRecipe(foodRecipe);
+            }
+        }
 
         public void RegisterRecipe(FoodRecipe recipe)
         {
@@ -54,75 +69,6 @@ namespace Core
             {
                 Destroy(gameObject);
             }
-        }
-    }
-
-    public sealed class CraftPlate : MonoBehaviour
-    {
-        private ICraftingVisualizer _visualizer = null;
-        private List<ICraftingCell> _craftingCells = new();
-        public static CraftPlate Instance { get; private set; } = null;
-        private bool _openFlag = false;
-
-
-        private void Awake()
-        {
-            InitializeSingleton();
-
-            if (_visualizer == null)
-            {
-                _visualizer = GetComponentInChildren<ICraftingVisualizer>();
-            }
-        }
-
-        public void RegisterCraftingCell(ICraftingCell craftingCell)
-        {
-            _craftingCells.Add(craftingCell);
-        }
-
-        private void InitializeSingleton()
-        {
-            if (CraftPlate.Instance == null)
-            {
-                CraftPlate.Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        public void HandleVisualize()
-        {
-            _openFlag = !_openFlag;
-
-            if (_openFlag)
-                _visualizer.Visualize();
-            else
-                _visualizer.Clear();
-        }
-
-        public void HandleConfirmCraft()
-        {
-            FoodRecipe recipe = FoodCraftManager.Instance.CraftFood(GetIngredients());
-
-            if (recipe != null)
-            {
-                EmployeeManager.SetWork(recipe);
-            }
-        }
-
-        private List<IngredientItem> GetIngredients()
-        {
-            List<IngredientItem> ingredientItems = new();
-
-            foreach (ICraftingCell craftingCell in _craftingCells)
-            {
-                if (!craftingCell.IsEmpty)
-                    ingredientItems.Add(craftingCell.GetIngredient());
-            }
-
-            return ingredientItems;
         }
     }
 

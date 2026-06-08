@@ -16,14 +16,15 @@ namespace Core
                 case StateType.Walk:
                     return new WalkState(action.WalkType);
                 case StateType.MakeOrder:
-                    Debug.Log("MakeOrder not realizet yet");
-                    break;
+                    return new MakeOrder();
                 case StateType.Vibing:
                     Debug.Log("Vibing not realizet yet");
                     break;
                 case StateType.Leave:
                     Debug.Log("Leave not realizet yet");
                     break;
+                case StateType.Cook:
+                    return new MakeFood(action.FoodRecipe);
                 default:
                     Debug.Log("State Is not Assigned To Fabric");
                     return null;

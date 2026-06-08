@@ -10,7 +10,7 @@ namespace Models
         [field: SerializeField] public DialogueTree Dialogue { get; private set; }
         [field: SerializeField] public StateType StateType { get; private set; }
         [field: SerializeField] public WalkType WalkType { get; private set; }
-        [field: SerializeField] public List<FoodPrefer> FoodTypes { get; private set; } = new();
+        [field: SerializeField] public FoodRecipe FoodRecipe { get; private set; }
         [field: SerializeField] public int IntData { get; private set; }
     }
 

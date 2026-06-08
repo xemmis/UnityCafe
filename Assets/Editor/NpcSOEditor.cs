@@ -126,7 +126,8 @@ public sealed class NpcSOEditor : Editor
             SerializedProperty dialogue = action.FindPropertyRelative("<Dialogue>k__BackingField");
             SerializedProperty stateType = action.FindPropertyRelative("<StateType>k__BackingField");
             SerializedProperty walkType = action.FindPropertyRelative("<WalkType>k__BackingField");
-            SerializedProperty foodTypes = action.FindPropertyRelative("<FoodTypes>k__BackingField");
+            SerializedProperty foodRecipe = action.FindPropertyRelative("<FoodRecipe>k__BackingField");
+            SerializedProperty intData = action.FindPropertyRelative("<IntData>k__BackingField");
 
             EditorGUILayout.BeginVertical(_actionBoxStyle);
 
@@ -163,11 +164,8 @@ public sealed class NpcSOEditor : Editor
 
             StateType currentState = (StateType)stateType.enumValueIndex;
 
-            if (currentState == StateType.Idle)
-            {
-                SerializedProperty intData = action.FindPropertyRelative("<IntData>k__BackingField");
-                EditorGUILayout.PropertyField(intData, new GUIContent("Idle Data"));
-            }
+            // IntData — теперь всегда
+            EditorGUILayout.PropertyField(intData, new GUIContent("Int Data"));
 
             // WalkType — только при Walk
             if (currentState == StateType.Walk)
@@ -175,68 +173,14 @@ public sealed class NpcSOEditor : Editor
                 EditorGUILayout.PropertyField(walkType, new GUIContent("Walk Type"));
             }
 
-            // FoodTypes — только при MakeOrder
+            // FoodRecipe — только при MakeOrder
             if (currentState == StateType.MakeOrder)
             {
-                EditorGUILayout.Space(2);
-                EditorGUILayout.LabelField("Food Preferences", EditorStyles.miniBoldLabel);
-                DrawFoodToggleGrid(foodTypes);
+                EditorGUILayout.PropertyField(foodRecipe, new GUIContent("Food Recipe"));
             }
 
             EditorGUI.indentLevel--;
             EditorGUILayout.EndVertical();
-        }
-    }
-
-    private void DrawFoodToggleGrid(SerializedProperty foodList)
-    {
-        string[] names = System.Enum.GetNames(typeof(FoodPrefer));
-        string[] emojis = { "🌶", "🍰", "🍪", "🧂", "🍋", "☕" };
-        int columns = 3;
-
-        EditorGUILayout.BeginVertical();
-        for (int row = 0; row < Mathf.CeilToInt(names.Length / (float)columns); row++)
-        {
-            EditorGUILayout.BeginHorizontal();
-            for (int col = 0; col < columns; col++)
-            {
-                int idx = row * columns + col;
-                if (idx >= names.Length) break;
-
-                bool current = FoodListContains(foodList, idx);
-                bool next = GUILayout.Toggle(current, $" {emojis[idx]} {names[idx]}", GUILayout.Width(110));
-
-                if (next != current)
-                {
-                    if (next) FoodListAdd(foodList, idx);
-                    else FoodListRemove(foodList, idx);
-                }
-            }
-            EditorGUILayout.EndHorizontal();
-        }
-        EditorGUILayout.EndVertical();
-    }
-
-    private bool FoodListContains(SerializedProperty list, int enumVal)
-    {
-        for (int i = 0; i < list.arraySize; i++)
-            if (list.GetArrayElementAtIndex(i).enumValueIndex == enumVal) return true;
-        return false;
-    }
-
-    private void FoodListAdd(SerializedProperty list, int enumVal)
-    {
-        list.InsertArrayElementAtIndex(list.arraySize);
-        list.GetArrayElementAtIndex(list.arraySize - 1).enumValueIndex = enumVal;
-    }
-
-    private void FoodListRemove(SerializedProperty list, int enumVal)
-    {
-        for (int i = 0; i < list.arraySize; i++)
-        {
-            if (list.GetArrayElementAtIndex(i).enumValueIndex != enumVal) continue;
-            list.DeleteArrayElementAtIndex(i);
-            return;
         }
     }
 
