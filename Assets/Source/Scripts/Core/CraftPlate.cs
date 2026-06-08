@@ -57,11 +57,13 @@ namespace Core
         public void HandleConfirmCraft()
         {
             FoodRecipe recipe = FoodCraftManager.Instance.CraftFood(GetIngredients());
-
             if (recipe != null)
             {
+                print("SetWork");
                 EmployeeManager.SetWork(recipe);
+                return;
             }
+            print("NE");
         }
 
         private List<IngredientItem> GetIngredients()

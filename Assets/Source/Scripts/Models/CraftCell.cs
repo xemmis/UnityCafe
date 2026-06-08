@@ -49,7 +49,7 @@ namespace Models
         {
             _currentIngredient = ingredient;
             ConfigureIngredientInCell();
-            IsEmpty = false;
+            IsEmpty = ingredient == null; // ← фикс
         }
 
         protected virtual void ConfigureIngredientInCell()

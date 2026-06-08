@@ -35,18 +35,15 @@ namespace Models.States
             _animator = null;
         }
 
-        public void Update(NpcBehaviorLogic controller) { }
-    }
-
-    public class ExitState : IState
-    {
-        public void Enter(NpcBehaviorLogic controller)
+        public void Update(NpcBehaviorLogic controller)
         {
-            controller.Agent.SetDestination(WalkManager.Instance.GetWalkPoint(WalkType.Leave).transform.position);
+            if (_agent == null || !_agent.isOnNavMesh) return;
+
+            bool arrived = !_agent.pathPending
+                && _agent.remainingDistance <= _agent.stoppingDistance;
+
+            if (arrived)
+                controller.NextState();
         }
-
-        public void Exit(NpcBehaviorLogic controller) { }
-
-        public void Update(NpcBehaviorLogic controller) { }
     }
 }

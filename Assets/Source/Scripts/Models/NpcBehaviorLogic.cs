@@ -74,6 +74,7 @@ namespace Models
                 IState state = NpcStateFabric.CreateState(npcAction);
                 _stateQueue.Enqueue(state);
             }
+            NextState();
         }
 
         public void ChangeState(IState newState)
@@ -88,7 +89,8 @@ namespace Models
             {
                 ApplyState(_stateQueue.Dequeue());
             }
-            else
+
+            if (!_isEmploye)
             {
                 _stateQueue.Clear();
                 _stateQueue.Enqueue(new ExitState());
@@ -100,6 +102,7 @@ namespace Models
         {
             _currentState?.Exit(this);
             _currentState = newState;
+            print(newState.GetType());
             _currentState?.Enter(this);
         }
 

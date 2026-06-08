@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69380e1621253247800157d502fcd96, type: 3}
+  m_Name: Strawberries
+  m_EditorClassIdentifier: Assembly-CSharp::Models.IngredientItem
+  <Icon>k__BackingField: {fileID: 2439041262173701937, guid: 832a1ca571d51ca4aa9e5acf1a70d7c3, type: 3}
+  <IngredientType>k__BackingField: 1
+  <Name>k__BackingField: Strawberries
+  Id: 3

@@ -10,21 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdb25974f655ccc4ab46363794356f3f, type: 3}
-  m_Name: Bread
+  m_Name: Berry_Cake
   m_EditorClassIdentifier: Assembly-CSharp:Models:FoodRecipe
   <Ingredients>k__BackingField:
-  - <Icon>k__BackingField: {fileID: 21300000, guid: 97cf6030d67008a49b241a21b0525188, type: 3}
-    <IngredientType>k__BackingField: 0
-    <Name>k__BackingField: Sugar
-    Id: 0
-  - <Icon>k__BackingField: {fileID: 21300000, guid: d437e9e82db10c7458b570001c3883af, type: 3}
-    <IngredientType>k__BackingField: 3
-    <Name>k__BackingField: Salt
-    Id: 0
-  <FoodOutput>k__BackingField:
-    <FoodPrefers>k__BackingField: 01000000
-    <Icon>k__BackingField: {fileID: 21300000, guid: c38d91fcbd2a2294f8e3c5e9742f9e4b, type: 3}
-    <FoodName>k__BackingField: Bread
+  - {fileID: 11400000, guid: 04fea67a158c5d141b9e9b87a39dc746, type: 2}
+  - {fileID: 11400000, guid: 677d9344e608a0c4fb08ba74ab1bb3cf, type: 2}
+  - {fileID: 11400000, guid: 699d4511654f42d449fd6da94ac0066a, type: 2}
+  - {fileID: 11400000, guid: 33a41f0b45fa240468140ddb417b6eee, type: 2}
+  <FoodOutput>k__BackingField: {fileID: 11400000, guid: e56031d93f4a4ba46826109b768f18e9, type: 2}
   <NpcActions>k__BackingField:
   - <Dialogue>k__BackingField: {fileID: 0}
     <StateType>k__BackingField: 1
@@ -35,5 +28,5 @@ MonoBehaviour:
     <StateType>k__BackingField: 5
     <WalkType>k__BackingField: 4
     <FoodRecipe>k__BackingField: {fileID: 11400000}
-    <IntData>k__BackingField: 15
+    <IntData>k__BackingField: 2
   <CookTime>k__BackingField: 0
