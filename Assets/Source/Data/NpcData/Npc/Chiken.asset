@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ff18c00f0cd2e47a3cd059a97be64c, type: 3}
   m_Name: Chiken
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
-  <Prefab>k__BackingField: {fileID: 5967782782992316158, guid: 5a330ffafa45bdb4d86382706905f21b, type: 3}
+  <Prefab>k__BackingField: {fileID: 2258488617491590897, guid: 51206e31f89ce594db371e777a07c8a8, type: 3}

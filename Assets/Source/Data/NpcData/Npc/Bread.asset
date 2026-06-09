@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ff18c00f0cd2e47a3cd059a97be64c, type: 3}
   m_Name: Bread
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
-  <Prefab>k__BackingField: {fileID: 7183340754865156679, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+  <Prefab>k__BackingField: {fileID: 2110613068325522175, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}

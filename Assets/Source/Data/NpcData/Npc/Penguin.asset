@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ff18c00f0cd2e47a3cd059a97be64c, type: 3}
   m_Name: Penguin
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
-  <Prefab>k__BackingField: {fileID: 7794944293138988504, guid: ba6ac31c444774a4cbbf26cc28916ffe, type: 3}
+  <Prefab>k__BackingField: {fileID: 1068660410517492684, guid: ec3a898639437a843a28588ebac3cdf0, type: 3}

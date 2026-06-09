@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Models
 {
-    public class CraftCell : MonoBehaviour, ICraftingCell, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class CraftCell : MonoBehaviour, IUICell<IngredientItem>, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField] protected Image _image = null;
         public bool IsEmpty { get; set; }
@@ -40,12 +40,12 @@ namespace Models
             CraftPlate.Instance.RegisterCraftingCell(this);
         }
 
-        public IngredientItem GetIngredient()
+        public IngredientItem GetItem()
         {
             return _currentIngredient;
         }
 
-        public virtual void SetIngredient(IngredientItem ingredient)
+        public virtual void SetItem(IngredientItem ingredient)
         {
             _currentIngredient = ingredient;
             ConfigureIngredientInCell();
@@ -102,7 +102,7 @@ namespace Models
 
             // Animate appearance
             _dragRectTransform.localScale = Vector3.zero;
-            _dragRectTransform.DOScale(1f, 0.2f).SetEase(Ease.OutBack);
+            _dragRectTransform.DOScale(5f, .2f).SetEase(Ease.OutBack);
 
             // Hide original icon
             _image.color = _transparent;
@@ -151,13 +151,13 @@ namespace Models
                         // Perform the swap
                         if (targetWasEmpty)
                         {
-                            targetCell.SetIngredient(sourceIngredient);
+                            targetCell.SetItem(sourceIngredient);
                             _dragSourceCell.ClearCell();
                         }
                         else
                         {
-                            targetCell.SetIngredient(sourceIngredient);
-                            _dragSourceCell.SetIngredient(targetIngredient);
+                            targetCell.SetItem(sourceIngredient);
+                            _dragSourceCell.SetItem(targetIngredient);
                         }
 
                         // Return drag icon to original position for potential reuse
@@ -177,6 +177,7 @@ namespace Models
                         _dragSourceCell.ConfigureIngredientInCell();
                         _dragRectTransform.position = _dragSourceCell.transform.position;
                     });
+                _dragRectTransform.DOScale(4, 0.4f);
             }
         }
 

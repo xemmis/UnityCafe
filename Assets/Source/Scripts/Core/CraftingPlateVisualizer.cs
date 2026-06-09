@@ -7,7 +7,8 @@ namespace Core
 {
     public sealed class CraftingPlateVisualizer : MonoBehaviour, ICraftingVisualizer
     {
-        private List<ICraftingCell> _ingredientCells = new();
+        [SerializeField] private GameObject _popap = null;
+        private List<IUICell<IngredientItem>> _ingredientCells = new();
         private Animator _animator = null;
         public static CraftingPlateVisualizer Instance = null;
 
@@ -29,29 +30,32 @@ namespace Core
             }
         }
 
-        public void RegisterCell(ICraftingCell cell)
+        public void RegisterCell(IUICell<IngredientItem> cell)
         {
             _ingredientCells.Add(cell);
         }
 
         public void Clear()
         {
-            foreach (ICraftingCell cell in _ingredientCells)
-                cell.SetIngredient(null);
+            foreach (IUICell<IngredientItem> cell in _ingredientCells)
+                cell.SetItem(null);
+
+            _popap.SetActive(false);
         }
 
         public void Visualize()
         {
             Dictionary<IngredientItem, int> ingredientItems = BakeryInventory.GetAllIngredients();
+            _popap.SetActive(true);
 
             using var enumerator = ingredientItems.GetEnumerator();
 
-            foreach (ICraftingCell cell in _ingredientCells)
+            foreach (IUICell<IngredientItem> cell in _ingredientCells)
             {
                 if (enumerator.MoveNext())
-                    cell.SetIngredient(enumerator.Current.Key);
+                    cell.SetItem(enumerator.Current.Key);
                 else
-                    cell.SetIngredient(null);
+                    cell.SetItem(null);
             }
         }
     }

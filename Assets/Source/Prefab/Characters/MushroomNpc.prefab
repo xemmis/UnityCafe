@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5764105226779696358
+--- !u!1001 &8532939190005878268
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1046977068337439516, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: 41cf6bf2a7ae93545876bcba7f7ee74b, type: 2}
+      objectReference: {fileID: 22100000, guid: 3327f1e687f9b6d4c9796f363cb71718, type: 2}
     - target: {fileID: 1665143077495855742, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -54,16 +54,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2110613068325522175, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_Name
-      value: KittyNpc
+      value: MushroomNpc
       objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _npcIcon
       value: 
-      objectReference: {fileID: 1402780765610546230, guid: 25a95831f4c09b14e8eaab30d5666995, type: 3}
+      objectReference: {fileID: 301630678067255945, guid: 232ff32a7b2f4504e93f54811912266c, type: 3}
     - target: {fileID: 5541789347535331228, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -8664014179036876150, guid: 25a95831f4c09b14e8eaab30d5666995, type: 3}
+      objectReference: {fileID: 301630678067255945, guid: 232ff32a7b2f4504e93f54811912266c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

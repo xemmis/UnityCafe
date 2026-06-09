@@ -90,12 +90,13 @@ namespace Models
                 ApplyState(_stateQueue.Dequeue());
             }
 
+            _stateQueue.Clear();
             if (!_isEmploye)
-            {
-                _stateQueue.Clear();
                 _stateQueue.Enqueue(new ExitState());
-                ApplyState(_stateQueue.Dequeue());
-            }
+            else
+                _stateQueue.Enqueue(new IdleState());
+
+            ApplyState(_stateQueue.Dequeue());
         }
 
         private void ApplyState(IState newState)

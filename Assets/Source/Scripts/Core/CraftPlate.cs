@@ -8,10 +8,9 @@ namespace Core
     public sealed class CraftPlate : MonoBehaviour
     {
         private ICraftingVisualizer _visualizer = null;
-        private List<ICraftingCell> _craftingCells = new();
+        private List<IUICell<IngredientItem>> _craftingCells = new();
         public static CraftPlate Instance { get; private set; } = null;
         private bool _openFlag = false;
-
 
         private void Awake()
         {
@@ -23,7 +22,7 @@ namespace Core
             }
         }
 
-        public void RegisterCraftingCell(ICraftingCell craftingCell)
+        public void RegisterCraftingCell(IUICell<IngredientItem> craftingCell)
         {
             _craftingCells.Add(craftingCell);
         }
@@ -48,8 +47,8 @@ namespace Core
                 _visualizer.Visualize();
             else
             {
-                foreach (ICraftingCell cell in _craftingCells)
-                    cell.SetIngredient(null);
+                foreach (IUICell<IngredientItem> cell in _craftingCells)
+                    cell.SetItem(null);
                 _visualizer.Clear();
             }
         }
@@ -70,18 +69,13 @@ namespace Core
         {
             List<IngredientItem> ingredientItems = new();
 
-            foreach (ICraftingCell craftingCell in _craftingCells)
+            foreach (IUICell<IngredientItem> craftingCell in _craftingCells)
             {
                 if (!craftingCell.IsEmpty)
-                    ingredientItems.Add(craftingCell.GetIngredient());
+                    ingredientItems.Add(craftingCell.GetItem());
             }
 
             return ingredientItems;
-        }
-
-        private void OnEnable()
-        {
-            HandleVisualize();
         }
     }
 

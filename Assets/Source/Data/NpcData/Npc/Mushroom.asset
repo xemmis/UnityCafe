@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ff18c00f0cd2e47a3cd059a97be64c, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
-  <Prefab>k__BackingField: {fileID: 8234073580311297761, guid: 9c778218804566446a1ef7118f5239e4, type: 3}
+  <Prefab>k__BackingField: {fileID: 7719576155104757507, guid: d389db215a472bf42b722be3797b46b1, type: 3}

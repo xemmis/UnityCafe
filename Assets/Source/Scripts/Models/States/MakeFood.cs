@@ -24,6 +24,7 @@ namespace Models.States
 
         public void Exit(NpcBehaviorLogic controller)
         {
+            BakeryInventory.Add(_recipe.FoodOutput);
             _recipe = null;
             Debug.Log("EndWork");
         }
@@ -34,7 +35,6 @@ namespace Models.States
 
             if (_cookTimer <= 0)
             {
-                BakeryInventory.Add(_recipe.FoodOutput);
                 controller.NextState();
             }
         }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ff18c00f0cd2e47a3cd059a97be64c, type: 3}
   m_Name: Bear
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
-  <Prefab>k__BackingField: {fileID: 6277055760424540102, guid: c00cb574a8994d14ebca50bbd89291cb, type: 3}
+  <Prefab>k__BackingField: {fileID: 3106239008168643676, guid: 103dc95101d1a6a4ca174e27550fc7f8, type: 3}
