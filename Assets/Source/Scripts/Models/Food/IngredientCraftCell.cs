@@ -1,6 +1,6 @@
-using Core;
+using Core.Food;
 
-namespace Models
+namespace Models.Food
 {
     public sealed class IngredientCraftCell : CraftCell
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Models
+namespace Models.Food
 {
     [CreateAssetMenu(fileName = "Ingredient", menuName = "Food/New Ingredient")]
     public sealed class IngredientItem : ScriptableObject
@@ -9,7 +9,8 @@ namespace Models
         [field: SerializeField] public FoodPrefer IngredientType { get; private set; }
         [field: SerializeField] public string Name { get; private set; }
 
-        public int Id;
+        [field: SerializeField] public int Id { get; private set; }
+
         public override bool Equals(object obj)
         {
             if (obj is not IngredientItem other) return false;

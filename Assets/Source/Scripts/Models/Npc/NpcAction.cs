@@ -1,8 +1,8 @@
 using Core.Dialogue;
-using System.Collections.Generic;
+using Models.Food;
 using UnityEngine;
 
-namespace Models
+namespace Models.Npc
 {
     [System.Serializable]
     public sealed class NpcAction

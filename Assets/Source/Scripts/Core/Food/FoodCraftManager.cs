@@ -1,9 +1,9 @@
-﻿using Models;
+﻿using Models.Food;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Core
+namespace Core.Food
 {
     public sealed class FoodCraftManager : MonoBehaviour
     {
@@ -11,7 +11,7 @@ namespace Core
         [SerializeField] private List<FoodRecipe> _recipes = new();
         private Dictionary<FoodRecipe, FoodItem> _foodDict = new();
 
-        public static FoodCraftManager Instance = null;
+        public static FoodCraftManager Instance { get; private set; } = null;
 
         private void Start()
         {

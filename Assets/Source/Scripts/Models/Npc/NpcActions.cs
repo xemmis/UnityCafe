@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Models
+namespace Models.Npc
 {
     [Serializable]
     public sealed class NpcActions

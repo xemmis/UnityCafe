@@ -1,8 +1,7 @@
 ﻿using Models;
+using Models.Npc;
 using Specs;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Core
 {
@@ -12,7 +11,7 @@ namespace Core
         [SerializeField] private WalkType _type;
         public bool IsReserved => _isReserved;
 
-        public WalkType Type => _type;
+        public WalkType Type => _type;        
 
         private void Start()
         {

@@ -1,4 +1,4 @@
-namespace Models
+namespace Models.Npc
 {
     public enum StateType
     {

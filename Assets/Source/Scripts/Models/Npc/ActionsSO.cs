@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Models
+namespace Models.Npc
 {
     [CreateAssetMenu(fileName = "Action Data", menuName = "Npc/New ActionList")]
     public sealed class ActionsSO : ScriptableObject

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Models
+namespace Models.Food
 {
     public class CraftCell : MonoBehaviour, IUICell<IngredientItem>, IBeginDragHandler, IDragHandler, IEndDragHandler
     {

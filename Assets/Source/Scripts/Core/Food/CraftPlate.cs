@@ -1,9 +1,9 @@
-﻿using Models;
+﻿using Models.Food;
 using Specs;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core
+namespace Core.Food
 {
     public sealed class CraftPlate : MonoBehaviour
     {
@@ -41,28 +41,43 @@ namespace Core
 
         public void HandleVisualize()
         {
-            _openFlag = !_openFlag;
+            // Не трогаем свой _openFlag — доверяем флагу визуалайзера
+            _visualizer.Visualize();
 
-            if (_openFlag)
-                _visualizer.Visualize();
-            else
-            {
-                foreach (IUICell<IngredientItem> cell in _craftingCells)
-                    cell.SetItem(null);
-                _visualizer.Clear();
-            }
+            foreach (IUICell<IngredientItem> cell in _craftingCells)
+                cell.SetItem(null);
+
+        }
+
+        public void ForceClose()
+        {
+            foreach (IUICell<IngredientItem> cell in _craftingCells)
+                cell.SetItem(null);
+            _visualizer.Clear();
         }
 
         public void HandleConfirmCraft()
         {
-            FoodRecipe recipe = FoodCraftManager.Instance.CraftFood(GetIngredients());
+            List<IngredientItem> ingredients = GetIngredients();
+            FoodRecipe recipe = FoodCraftManager.Instance.CraftFood(ingredients);
+
             if (recipe != null)
             {
-                print("SetWork");
+                foreach (IngredientItem ingredient in ingredients)
+                    BakeryInventory.Remove(ingredient);
+
+                RemoveIngredients();
                 EmployeeManager.SetWork(recipe);
                 return;
             }
             print("NE");
+        }
+        private void RemoveIngredients()
+        {
+            foreach (IUICell<IngredientItem> cell in _craftingCells)
+            {
+                cell.SetItem(null);
+            }
         }
 
         private List<IngredientItem> GetIngredients()

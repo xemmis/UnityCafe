@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.AI;
 using Models.States;
 
-namespace Models
+namespace Models.Npc
 {
     public sealed class NpcBehaviorLogic : MonoBehaviour, IPointerClickHandler
     {
@@ -88,15 +88,10 @@ namespace Models
             if (_stateQueue.Count > 0)
             {
                 ApplyState(_stateQueue.Dequeue());
+                return;
             }
 
-            _stateQueue.Clear();
-            if (!_isEmploye)
-                _stateQueue.Enqueue(new ExitState());
-            else
-                _stateQueue.Enqueue(new IdleState());
-
-            ApplyState(_stateQueue.Dequeue());
+            ApplyState(_isEmploye ? new IdleState() : new ExitState());
         }
 
         private void ApplyState(IState newState)

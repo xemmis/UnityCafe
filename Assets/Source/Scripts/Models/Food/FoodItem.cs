@@ -1,7 +1,8 @@
+using Models.Npc;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Models
+namespace Models.Food
 {
     [CreateAssetMenu(fileName = "Food", menuName = "Food/New Food")]
     public sealed class FoodItem : ScriptableObject
