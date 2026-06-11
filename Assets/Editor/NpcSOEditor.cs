@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 using Models;
+using Models.Npc;
 
 [CustomEditor(typeof(ActionsSO))]
 public sealed class NpcSOEditor : Editor

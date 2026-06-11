@@ -10,9 +10,4 @@ namespace Specs
         void SkipReveal();
         void ClearText();
     }
-
-    public interface ISelectable
-    {
-        void Select(bool condition);
-    }
 }

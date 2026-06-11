@@ -1,4 +1,4 @@
-using Models;
+using Models.Npc;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;

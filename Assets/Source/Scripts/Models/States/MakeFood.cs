@@ -1,4 +1,7 @@
 using Core;
+using Core.Food;
+using Models.Food;
+using Models.Npc;
 using Specs;
 using UnityEngine;
 

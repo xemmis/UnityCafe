@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Models.Food;
+using Models.Npc;
 using System.Collections.Generic;
 
 namespace Core

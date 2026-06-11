@@ -1,4 +1,5 @@
 using Core;
+using Models.Npc;
 using Specs;
 using UnityEngine;
 using UnityEngine.AI;

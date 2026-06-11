@@ -2,6 +2,8 @@
 using UnityEditor;
 using UnityEngine;
 using Models;
+using Models.Food;
+using Models.Npc;
 
 [CustomEditor(typeof(FoodRecipe))]
 public sealed class FoodRecipeEditor : Editor

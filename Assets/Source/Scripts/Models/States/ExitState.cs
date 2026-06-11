@@ -1,4 +1,5 @@
 using Core;
+using Models.Npc;
 using Specs;
 
 namespace Models.States

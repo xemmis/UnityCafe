@@ -1,4 +1,4 @@
-using Models;
+using Models.Npc;
 using Models.States;
 using Specs;
 using UnityEngine;

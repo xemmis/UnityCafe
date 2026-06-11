@@ -1,5 +1,4 @@
-﻿using Models;
-using Models.Npc;
+﻿using Models.Npc;
 using Specs;
 using UnityEngine;
 
@@ -11,7 +10,8 @@ namespace Core
         [SerializeField] private WalkType _type;
         public bool IsReserved => _isReserved;
 
-        public WalkType Type => _type;        
+
+        WalkType IReservable.Type => _type;
 
         private void Start()
         {

@@ -1,3 +1,4 @@
+using Models.Npc;
 using Specs;
 using UnityEngine;
 
