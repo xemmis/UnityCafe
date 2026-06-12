@@ -10,7 +10,6 @@ namespace Core.Food
         private ICraftingVisualizer _visualizer = null;
         private List<IUICell<IngredientItem>> _craftingCells = new();
         public static CraftPlate Instance { get; private set; } = null;
-        private bool _openFlag = false;
 
         private void Awake()
         {

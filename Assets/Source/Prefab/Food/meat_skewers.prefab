@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5993335101619696461}
   - component: {fileID: 1243621754236782946}
+  - component: {fileID: 8604383466686780227}
   m_Layer: 0
   m_Name: meat_skewers
   m_TagString: Untagged
@@ -91,3 +92,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &8604383466686780227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4720034063068242103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ae9cac92a64954ea17ee55622e1c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.Plant
