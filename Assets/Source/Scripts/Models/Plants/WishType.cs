@@ -1,6 +1,9 @@
 namespace Models.Plant
 {
-    public enum PlantWishType
+    // Сама фабрика
+
+
+    public enum WishType
     {
         None,
         Food,
