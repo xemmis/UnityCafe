@@ -5,7 +5,7 @@ namespace Models.Plant
 {
     // Конфигурация для настройки желаний в инспекторе
     [Serializable]
-    public class WishConfig
+    public sealed class WishConfig
     {
         public WishType Type;
         public Sprite Icon;

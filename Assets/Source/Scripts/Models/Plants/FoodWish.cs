@@ -1,12 +1,9 @@
+using Specs;
 using UnityEngine;
 
 namespace Models.Plant
 {
-    // Интерфейс для всех типов желаний
-
-
-    // Конкретные реализации желаний
-    public class FoodWish : IWish
+    public sealed class FoodWish : IWish
     {
         public WishType Type => WishType.Food;
         public Sprite Icon { get; private set; }

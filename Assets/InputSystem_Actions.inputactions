@@ -991,6 +991,76 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Plant",
+            "id": "4693d5cb-699c-406f-81d4-1e8934929c46",
+            "actions": [
+                {
+                    "name": "PointerDown",
+                    "type": "Button",
+                    "id": "bbe6e7cd-8c13-45ec-952b-eb1fdfecfb8b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PointerDrag",
+                    "type": "Value",
+                    "id": "8787b8ab-a66d-432c-b422-a6ae87221b65",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b75853e6-7b11-41e1-90e0-b8e36acbad41",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c8d9a57-8261-4cbb-a748-88e8294d04ae",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30eb6e16-b472-494f-8354-f1658069442a",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4a3c3126-8e7f-4193-a333-fbb75a9b7442",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PointerDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -1,8 +1,9 @@
+using Specs;
 using UnityEngine;
 
 namespace Models.Plant
 {
-    public class AttentionWish : IWish
+    public sealed class AttentionWish : IWish
     {
         public WishType Type => WishType.Attention;
         public Sprite Icon { get; private set; }

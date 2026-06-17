@@ -1,8 +1,5 @@
 namespace Models.Plant
 {
-    // Сама фабрика
-
-
     public enum WishType
     {
         None,

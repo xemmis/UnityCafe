@@ -1,8 +1,9 @@
+using Specs;
 using UnityEngine;
 
 namespace Models.Plant
 {
-    public class WaterWish : IWish
+    public sealed class WaterWish : IWish
     {
         public WishType Type => WishType.Water;
         public Sprite Icon { get; private set; }
