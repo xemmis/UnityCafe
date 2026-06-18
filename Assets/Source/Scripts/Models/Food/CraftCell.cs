@@ -29,15 +29,24 @@ namespace Models.Food
 
         private void Awake()
         {
+            Debug.Log($"[CraftCell] Awake on {gameObject.name}");
+
             if (_image == null)
+            {
                 _image = GetComponentInChildren<Image>();
+                Debug.Log($"[CraftCell] _image auto-assigned: {(_image != null)}");
+            }
 
             if (_canvas == null)
+            {
                 _canvas = GetComponentInParent<Canvas>();
+                Debug.Log($"[CraftCell] _canvas found: {(_canvas != null)}, name: {_canvas?.name}");
+            }
         }
 
         protected virtual void Start()
         {
+            Debug.Log($"[CraftCell] Start on {gameObject.name}, registering with CraftPlate");
             CraftPlate.Instance.RegisterCraftingCell(this);
         }
 
@@ -48,25 +57,31 @@ namespace Models.Food
 
         public virtual void SetItem(IngredientItem ingredient)
         {
+            Debug.Log($"[CraftCell] SetItem on {gameObject.name}, ingredient: {(ingredient != null ? ingredient.name : "null")}");
             _currentIngredient = ingredient;
             ConfigureIngredientInCell();
-            IsEmpty = ingredient == null; // ← фикс
+            IsEmpty = ingredient == null;
         }
 
         protected virtual void ConfigureIngredientInCell()
         {
+            Debug.Log($"[CraftCell] ConfigureIngredientInCell on {gameObject.name}, _currentIngredient: {(_currentIngredient != null ? _currentIngredient.name : "null")}");
+
             if (_currentIngredient == null)
             {
                 _image.color = _transparent;
+                Debug.Log($"[CraftCell] Setting transparent color");
                 return;
             }
 
             _image.color = _visible;
             _image.sprite = _currentIngredient.Icon;
+            Debug.Log($"[CraftCell] Setting visible color and sprite: {_currentIngredient.Icon?.name}");
         }
 
         public void ClearCell()
         {
+            Debug.Log($"[CraftCell] ClearCell on {gameObject.name}");
             _currentIngredient = null;
             _image.color = _transparent;
             _image.sprite = null;
@@ -75,14 +90,21 @@ namespace Models.Food
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            Debug.Log($"[CraftCell] OnBeginDrag on {gameObject.name}, IsEmpty: {IsEmpty}, _currentIngredient: {(_currentIngredient != null ? _currentIngredient.name : "null")}");
+
             if (IsEmpty || _currentIngredient == null)
+            {
+                Debug.LogWarning($"[CraftCell] OnBeginDrag BLOCKED - cell is empty or ingredient is null");
                 return;
+            }
 
             _dragSourceCell = this;
+            Debug.Log($"[CraftCell] Drag source set to: {gameObject.name}");
 
             // Create global drag icon
             if (_dragIcon == null)
             {
+                Debug.Log("[CraftCell] Creating new global drag icon");
                 var dragObject = new GameObject("GlobalDragIcon");
                 _dragIcon = dragObject.AddComponent<Image>();
                 _dragRectTransform = dragObject.GetComponent<RectTransform>();
@@ -92,71 +114,105 @@ namespace Models.Food
                 {
                     _dragRectTransform.SetParent(_canvas.transform);
                     _dragRectTransform.SetAsLastSibling();
+                    Debug.Log($"[CraftCell] Drag icon parented to canvas: {_canvas.name}");
+                }
+                else
+                {
+                    Debug.LogError("[CraftCell] CANVAS IS NULL! Drag icon won't be parented properly!");
                 }
             }
 
+            Debug.Log($"[CraftCell] Setting drag icon sprite: {_currentIngredient.Icon?.name}");
             _dragIcon.sprite = _currentIngredient.Icon;
             _dragIcon.SetNativeSize();
             _dragIcon.gameObject.SetActive(true);
 
+            Debug.Log($"[CraftCell] Drag icon active: {_dragIcon.gameObject.activeSelf}, position: {_dragRectTransform.position}");
+
             SetDragPosition(eventData);
 
             // Animate appearance
+            Debug.Log("[CraftCell] Starting drag icon animation");
             _dragRectTransform.localScale = Vector3.zero;
             _dragRectTransform.DOScale(5f, .2f).SetEase(Ease.OutBack);
 
             // Hide original icon
             _image.color = _transparent;
+            Debug.Log("[CraftCell] Original image hidden");
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             if (_dragIcon == null || !_dragIcon.gameObject.activeSelf)
+            {
+                if (_dragIcon == null)
+                    Debug.LogWarning("[CraftCell] OnDrag - _dragIcon is null");
+                else
+                    Debug.LogWarning("[CraftCell] OnDrag - drag icon not active");
                 return;
+            }
 
+            Debug.Log($"[CraftCell] OnDrag - updating position to: {eventData.position}");
             SetDragPosition(eventData);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            Debug.Log($"[CraftCell] OnEndDrag on {gameObject.name}");
+
             if (_dragIcon == null || !_dragIcon.gameObject.activeSelf || _dragSourceCell == null)
+            {
+                Debug.LogWarning($"[CraftCell] OnEndDrag BLOCKED - dragIcon: {_dragIcon != null}, active: {_dragIcon?.gameObject.activeSelf}, sourceCell: {_dragSourceCell != null}");
                 return;
+            }
 
             // Find target cell
             var results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, results);
 
+            Debug.Log($"[CraftCell] Raycast results count: {results.Count}");
+
             CraftCell targetCell = null;
 
             foreach (var result in results)
             {
+                Debug.Log($"[CraftCell] Raycast hit: {result.gameObject.name}");
                 targetCell = result.gameObject.GetComponent<CraftCell>();
                 if (targetCell != null)
+                {
+                    Debug.Log($"[CraftCell] Found target cell: {targetCell.gameObject.name}");
                     break;
+                }
             }
 
             if (targetCell != null && targetCell != _dragSourceCell)
             {
-                // Swap ingredients between cells
+                Debug.Log($"[CraftCell] Valid target found, swapping from {_dragSourceCell.gameObject.name} to {targetCell.gameObject.name}");
+
                 var sourceIngredient = _dragSourceCell._currentIngredient;
                 var targetIngredient = targetCell._currentIngredient;
                 bool targetWasEmpty = targetCell.IsEmpty;
+
+                Debug.Log($"[CraftCell] Source ingredient: {sourceIngredient?.name}, Target ingredient: {targetIngredient?.name}, Target was empty: {targetWasEmpty}");
 
                 // Animate drop
                 _dragRectTransform.DOMove(targetCell.transform.position, 0.2f)
                     .SetEase(Ease.InOutQuad)
                     .OnComplete(() =>
                     {
+                        Debug.Log("[CraftCell] Drop animation complete, performing swap");
                         _dragIcon.gameObject.SetActive(false);
 
                         // Perform the swap
                         if (targetWasEmpty)
                         {
+                            Debug.Log("[CraftCell] Target was empty, moving ingredient");
                             targetCell.SetItem(sourceIngredient);
                             _dragSourceCell.ClearCell();
                         }
                         else
                         {
+                            Debug.Log("[CraftCell] Swapping ingredients");
                             targetCell.SetItem(sourceIngredient);
                             _dragSourceCell.SetItem(targetIngredient);
                         }
@@ -169,11 +225,14 @@ namespace Models.Food
             }
             else
             {
+                Debug.Log("[CraftCell] No valid target found, returning to original cell");
+
                 // Return to original cell with animation
                 _dragRectTransform.DOMove(_dragSourceCell.transform.position, 0.3f)
                     .SetEase(Ease.OutBack)
                     .OnComplete(() =>
                     {
+                        Debug.Log("[CraftCell] Return animation complete");
                         _dragIcon.gameObject.SetActive(false);
                         _dragSourceCell.ConfigureIngredientInCell();
                         _dragRectTransform.position = _dragSourceCell.transform.position;
@@ -185,7 +244,10 @@ namespace Models.Food
         private void SetDragPosition(PointerEventData eventData)
         {
             if (_dragRectTransform == null || _canvas == null)
+            {
+                Debug.LogError($"[CraftCell] SetDragPosition FAILED - dragRectTransform: {_dragRectTransform != null}, canvas: {_canvas != null}");
                 return;
+            }
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 _canvas.GetComponent<RectTransform>(),
@@ -194,13 +256,18 @@ namespace Models.Food
                 out Vector2 localPoint
             );
 
+            Debug.Log($"[CraftCell] Setting drag position to local point: {localPoint}");
             _dragRectTransform.localPosition = localPoint;
         }
 
         private void OnDestroy()
         {
+            Debug.Log($"[CraftCell] OnDestroy on {gameObject.name}");
             if (_dragIcon != null && !this.IsDestroyed())
+            {
+                Debug.Log("[CraftCell] Destroying global drag icon");
                 Destroy(_dragIcon.gameObject);
+            }
         }
     }
 }

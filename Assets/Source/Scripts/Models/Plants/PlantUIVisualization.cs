@@ -14,6 +14,19 @@ namespace Models.Plant
         private Color _transparent = new Color(0, 0, 0, 0);
         private Color _visible = new Color(1, 1, 1, 1);
 
+        private void Start()
+        {
+            if (_progressEnabled && _plantBehavior != null)
+            {
+                _progressImage.sprite = _plantBehavior.PlantData.PlantSprite;
+                _progressImage.color = _visible;
+            }
+            else
+            {
+                _progressImage.color = _transparent;
+            }
+        }
+
         private void Update()
         {
             if (_progressEnabled)

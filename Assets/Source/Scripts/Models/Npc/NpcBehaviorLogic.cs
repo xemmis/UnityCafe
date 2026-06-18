@@ -20,7 +20,8 @@ namespace Models.Npc
         private NpcAction _currentAction = null;
         private IState _currentState = null;
         private DialogueMood _currentMood;
-
+        private bool _isWorking = false;
+        public bool IsWorking => _isWorking;
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
 
@@ -37,6 +38,11 @@ namespace Models.Npc
                 EmployeeManager.RegisterEmployee(this);
         }
 
+        public void SetWorkState(bool condition)
+        {
+            _isWorking = condition;
+        }
+
         private void InitializeComponents()
         {
             TryGetComponent<NavMeshAgent>(out _agent);
@@ -48,11 +54,6 @@ namespace Models.Npc
             var moods = (DialogueMood[])System.Enum.GetValues(typeof(DialogueMood));
 
             _currentMood = moods[Random.Range(0, moods.Length)];
-        }
-
-        public bool HasActions()
-        {
-            return _currentAction != null;
         }
 
         public void Initialize(ActionsSO npcSO)
@@ -90,7 +91,7 @@ namespace Models.Npc
                 ApplyState(_stateQueue.Dequeue());
                 return;
             }
-
+            _isWorking = false;
             ApplyState(_isEmploye ? new IdleState() : new ExitState());
         }
 

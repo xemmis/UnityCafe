@@ -17,15 +17,14 @@ namespace Core.Food
         private bool _openFlag = false;
         private readonly List<FoodItemCell> _cells = new();
 
-        private void OnDisable()
+        private void Start()
         {
-            BakeryInventory.OnFoodInventoryChange -= OnFoodChanged;
+            BakeryInventory.OnFoodInventoryChange += OnFoodChanged;            
         }
 
         public void Visualize()
         {
             _openFlag = !_openFlag;
-            BakeryInventory.OnFoodInventoryChange += OnFoodChanged;
             Refresh();
 
             if (_openFlag)

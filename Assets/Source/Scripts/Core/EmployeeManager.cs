@@ -1,6 +1,7 @@
 ﻿using Models.Food;
 using Models.Npc;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core
 {
@@ -17,8 +18,12 @@ namespace Core
         {
             foreach (NpcBehaviorLogic npc in _employeeList)
             {
-                if (npc.HasActions()) continue;
-
+                if (npc.IsWorking)
+                {
+                    Debug.Log("Has");
+                    continue;
+                }
+                npc.SetWorkState(true);
                 npc.Initialize(Recipe.NpcActions);
             }
         }

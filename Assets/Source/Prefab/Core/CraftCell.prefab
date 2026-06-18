@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5462901358529571759}
   - component: {fileID: 4527650676298395395}
   - component: {fileID: 3656696930070134494}
+  - component: {fileID: 8779740903778576604}
   m_Layer: 5
   m_Name: CraftCell
   m_TagString: Untagged
@@ -29,8 +30,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4327760786120486127}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -58,73 +58,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98f7af9a676b3b43a5f29d9b916285f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Models.CraftCell
-  _image: {fileID: 5883018414806832155}
---- !u!1 &7064593627481632849
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4327760786120486127}
-  - component: {fileID: 6375911893700295728}
-  - component: {fileID: 5883018414806832155}
-  m_Layer: 5
-  m_Name: Icon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4327760786120486127
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064593627481632849}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5462901358529571759}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 125, y: 1}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &6375911893700295728
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064593627481632849}
-  m_CullTransparentMesh: 1
---- !u!114 &5883018414806832155
+  _image: {fileID: 8779740903778576604}
+--- !u!114 &8779740903778576604
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064593627481632849}
+  m_GameObject: {fileID: 1699523807117369556}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7982100037574052958, guid: 26cdd84de8a5f8149abe07b7b8a8a9bc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2451907f4ea3bb5409e10b261f1b3429, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

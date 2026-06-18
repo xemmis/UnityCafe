@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb25974f655ccc4ab46363794356f3f, type: 3}
+  m_Name: Strawberry_cupcake
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Food.FoodRecipe
+  <Ingredients>k__BackingField:
+  - {fileID: 11400000, guid: 03d0836b8aa61de43bb9bb9d5b44f51b, type: 2}
+  - {fileID: 11400000, guid: f94d1632fa1cd204eac471f31263286f, type: 2}
+  - {fileID: 11400000, guid: baebbcf9fee9326499db86d4d927761d, type: 2}
+  <FoodOutput>k__BackingField: {fileID: 11400000, guid: aa48434a14cf1794fb08f88cd2c88ad0, type: 2}
+  <NpcActions>k__BackingField:
+  - <Dialogue>k__BackingField: {fileID: 0}
+    <StateType>k__BackingField: 1
+    <WalkType>k__BackingField: 4
+    <FoodRecipe>k__BackingField: {fileID: 11400000}
+    <IntData>k__BackingField: 0
+  - <Dialogue>k__BackingField: {fileID: 0}
+    <StateType>k__BackingField: 5
+    <WalkType>k__BackingField: 4
+    <FoodRecipe>k__BackingField: {fileID: 11400000}
+    <IntData>k__BackingField: 0
+  <CookTime>k__BackingField: 2

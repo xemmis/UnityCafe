@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Models.Plant
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public sealed class PlantBehavior : MonoBehaviour
     {
         [SerializeField] private float _growDuration = 150f;
@@ -21,7 +22,7 @@ namespace Models.Plant
         private float _growProgress;
 
         public bool CanHarvest => _canHarvest;
-
+        public PlantSO PlantData => _plantData;
         public void SetGrowthSpeed(float speed) => _growthSpeed = Mathf.Max(0f, speed);
         public void PauseGrowth() => _growthSpeed = 0f;
         public void ResumeGrowth() => _growthSpeed = 1f;

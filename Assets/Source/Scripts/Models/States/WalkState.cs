@@ -26,6 +26,11 @@ namespace Models.States
         {
             _agent = controller.Agent;
             _animator = controller.Animator;
+            if (_point == null)
+            {
+                Debug.Log("Point == null");
+                return;
+            }
             _agent.SetDestination(_point.transform.position);
         }
 

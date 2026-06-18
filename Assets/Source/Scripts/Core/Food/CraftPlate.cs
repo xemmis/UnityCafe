@@ -42,7 +42,6 @@ namespace Core.Food
         {
             // Не трогаем свой _openFlag — доверяем флагу визуалайзера
             _visualizer.Visualize();
-
             foreach (IUICell<IngredientItem> cell in _craftingCells)
                 cell.SetItem(null);
 
@@ -67,6 +66,7 @@ namespace Core.Food
 
                 RemoveIngredients();
                 EmployeeManager.SetWork(recipe);
+                print("DA");
                 return;
             }
             print("NE");
