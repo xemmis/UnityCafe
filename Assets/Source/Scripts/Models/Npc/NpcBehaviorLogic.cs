@@ -13,15 +13,16 @@ namespace Models.Npc
     {
         [SerializeField] private Sprite _npcIcon = null;
         [SerializeField] private bool _isEmploye = false;
+        [SerializeField] private NpcAction _currentAction = null;
+        [SerializeField] private ActionsSO _npcSO = null;
         private readonly Queue<IState> _stateQueue = new();
         private NavMeshAgent _agent = null;
         private Animator _animator = null;
-        private ActionsSO _npcSO = null;
-        private NpcAction _currentAction = null;
         private IState _currentState = null;
         private DialogueMood _currentMood;
         private bool _isWorking = false;
         public bool IsWorking => _isWorking;
+        public NpcAction CurrentAction => _currentAction;
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
 
@@ -36,6 +37,8 @@ namespace Models.Npc
         {
             if (_isEmploye)
                 EmployeeManager.RegisterEmployee(this);
+
+            ApplyState(new WalkState(WalkManager.Instance.GetFirstFreeWalkPoint(WalkType.Table)));
         }
 
         public void SetWorkState(bool condition)

@@ -8,7 +8,7 @@ namespace Models.States
     {
         public void Enter(NpcBehaviorLogic controller)
         {
-            controller.Agent.SetDestination(WalkManager.Instance.GetWalkPoint(WalkType.Leave).transform.position);
+            controller.Agent.SetDestination(WalkManager.Instance.GetNearestWalkPoint(WalkType.Leave, controller.transform.position).transform.position);
         }
 
         public void Exit(NpcBehaviorLogic controller) { }

@@ -145,7 +145,7 @@ namespace Models.Food
             // дальше твоя логика if (targetNpc != null) / else if (targetCell != null) / else
 
 
-            if (targetNpc != null)
+            if (targetNpc != null && targetNpc.CurrentAction.FoodRecipe?.FoodOutput == _currentFood)
             {
                 // Конвертируем мировую позицию NPC в позицию на Canvas
                 Vector2 screenPos = Camera.main.WorldToScreenPoint(targetNpc.transform.position);

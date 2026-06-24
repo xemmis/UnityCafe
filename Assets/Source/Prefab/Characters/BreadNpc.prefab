@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.566, y: 1.4215803, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -132,6 +132,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.NpcBehaviorLogic
   _npcIcon: {fileID: -7605009923466122419, guid: e81b02b797585e54b84905df0454d01d, type: 3}
   _isEmploye: 0
+  _currentAction:
+    <Dialogue>k__BackingField: {fileID: 0}
+    <StateType>k__BackingField: 0
+    <WalkType>k__BackingField: 0
+    <FoodRecipe>k__BackingField: {fileID: 0}
+    <IntData>k__BackingField: 0
+  _npcSO: {fileID: 0}
 --- !u!114 &-3963471850930491527
 MonoBehaviour:
   m_ObjectHideFlags: 0

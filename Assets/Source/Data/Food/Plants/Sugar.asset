@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd3076b0fdb7ac42931b1e5722851a8, type: 3}
+  m_Name: Sugar
+  m_EditorClassIdentifier: Assembly-CSharp::Core.PlantSO
+  <Ingredinet>k__BackingField: {fileID: 11400000, guid: baebbcf9fee9326499db86d4d927761d, type: 2}
+  <Stages>k__BackingField:
+  - <StageSprite>k__BackingField: {fileID: 944254425, guid: 9e2aa76dd9d7e384d8dfe86f3112f8b4, type: 3}
+    <GrowTimer>k__BackingField: 15
+  - <StageSprite>k__BackingField: {fileID: 2063653456, guid: 9e2aa76dd9d7e384d8dfe86f3112f8b4, type: 3}
+    <GrowTimer>k__BackingField: 15
+  <IngredientOutput>k__BackingField: 1
+  <PlantCost>k__BackingField: 15
+  <ReadyForHarvestSpr>k__BackingField: {fileID: 2063653456, guid: 9e2aa76dd9d7e384d8dfe86f3112f8b4, type: 3}
+  <NotReadyForHarvestSpr>k__BackingField: {fileID: 1850978069, guid: 9e2aa76dd9d7e384d8dfe86f3112f8b4, type: 3}

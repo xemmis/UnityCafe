@@ -51,6 +51,7 @@ namespace Core.Food
         {
             if (!_openFlag) return; // уже закрыто — не делаем ничего
 
+            GameCondition.ChangeCameraControllCondition(true);
             _openFlag = false;
             _popap.transform.DOMove(_clearPos.position, 1f);
             _clearItemRoutine = StartCoroutine(ClearItemsInCellTick());
@@ -77,6 +78,7 @@ namespace Core.Food
 
         private void Open()
         {
+            GameCondition.ChangeCameraControllCondition();
             _openFlag = true;
             Dictionary<IngredientItem, int> ingredientItems = BakeryInventory.GetAllIngredients();
             _popap.transform.DOMove(_visualizePos.position, 1);

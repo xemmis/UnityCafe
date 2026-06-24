@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae012a86cbf80742b6a2f865652656a, type: 3}
+  m_Name: New Furniture
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Furniture.FurnutureData
+  <FurnitureStages>k__BackingField:
+  - <CurrentStageSprite>k__BackingField: {fileID: 21300000, guid: f614baef4e08f0a4bb0014ffa7ae4bfb, type: 3}
+    <NextStageSprite>k__BackingField: {fileID: 21300000, guid: c38d91fcbd2a2294f8e3c5e9742f9e4b, type: 3}
+    <NextStageCost>k__BackingField: 15
+    <DependentSprites>k__BackingField:
+    - {fileID: 21300000, guid: b6ef01e29512d28469b2167ca704950a, type: 3}
+  - <CurrentStageSprite>k__BackingField: {fileID: 21300000, guid: c38d91fcbd2a2294f8e3c5e9742f9e4b, type: 3}
+    <NextStageSprite>k__BackingField: {fileID: 21300000, guid: c38d91fcbd2a2294f8e3c5e9742f9e4b, type: 3}
+    <NextStageCost>k__BackingField: 25
+    <DependentSprites>k__BackingField:
+    - {fileID: 21300000, guid: a20dd5de922186c42a818565b1f18612, type: 3}
+  - <CurrentStageSprite>k__BackingField: {fileID: 21300000, guid: c38d91fcbd2a2294f8e3c5e9742f9e4b, type: 3}
+    <NextStageSprite>k__BackingField: {fileID: 21300000, guid: c38d91fcbd2a2294f8e3c5e9742f9e4b, type: 3}
+    <NextStageCost>k__BackingField: 35
+    <DependentSprites>k__BackingField:
+    - {fileID: 21300000, guid: 841ac18e32f2df7489c598380865e252, type: 3}

@@ -15,7 +15,7 @@ namespace Models.States
 
         public WalkState(WalkType walkType)
         {
-            _point = WalkManager.Instance?.GetWalkPoint(walkType);
+            _point = WalkManager.Instance?.GetFirstFreeWalkPoint(walkType);
         }
 
         private WalkPoint _point = new();

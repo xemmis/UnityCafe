@@ -4,19 +4,12 @@ using UnityEngine;
 
 namespace Core
 {
-    public sealed class WalkPoint : MonoBehaviour, IReservable
+    public class WalkPoint : MonoBehaviour, IReservable
     {
         [SerializeField] private bool _isReserved = false;
         [SerializeField] private WalkType _type;
         public bool IsReserved => _isReserved;
-
-
-        WalkType IReservable.Type => _type;
-
-        private void Start()
-        {
-            WalkManager.Instance?.RegisterPoint(this, _type);
-        }
+        public WalkType Type => _type;
 
         public void Reserve()
         {

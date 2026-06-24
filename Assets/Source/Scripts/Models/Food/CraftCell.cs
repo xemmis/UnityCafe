@@ -90,7 +90,7 @@ namespace Models.Food
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            Debug.Log($"[CraftCell] OnBeginDrag on {gameObject.name}, IsEmpty: {IsEmpty}, _currentIngredient: {(_currentIngredient != null ? _currentIngredient.name : "null")}");
+           
 
             if (IsEmpty || _currentIngredient == null)
             {
@@ -99,7 +99,6 @@ namespace Models.Food
             }
 
             _dragSourceCell = this;
-            Debug.Log($"[CraftCell] Drag source set to: {gameObject.name}");
 
             // Create global drag icon
             if (_dragIcon == null)
@@ -122,12 +121,10 @@ namespace Models.Food
                 }
             }
 
-            Debug.Log($"[CraftCell] Setting drag icon sprite: {_currentIngredient.Icon?.name}");
             _dragIcon.sprite = _currentIngredient.Icon;
             _dragIcon.SetNativeSize();
             _dragIcon.gameObject.SetActive(true);
 
-            Debug.Log($"[CraftCell] Drag icon active: {_dragIcon.gameObject.activeSelf}, position: {_dragRectTransform.position}");
 
             SetDragPosition(eventData);
 
@@ -152,17 +149,14 @@ namespace Models.Food
                 return;
             }
 
-            Debug.Log($"[CraftCell] OnDrag - updating position to: {eventData.position}");
             SetDragPosition(eventData);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log($"[CraftCell] OnEndDrag on {gameObject.name}");
 
             if (_dragIcon == null || !_dragIcon.gameObject.activeSelf || _dragSourceCell == null)
             {
-                Debug.LogWarning($"[CraftCell] OnEndDrag BLOCKED - dragIcon: {_dragIcon != null}, active: {_dragIcon?.gameObject.activeSelf}, sourceCell: {_dragSourceCell != null}");
                 return;
             }
 
@@ -180,33 +174,28 @@ namespace Models.Food
                 targetCell = result.gameObject.GetComponent<CraftCell>();
                 if (targetCell != null)
                 {
-                    Debug.Log($"[CraftCell] Found target cell: {targetCell.gameObject.name}");
                     break;
                 }
             }
 
             if (targetCell != null && targetCell != _dragSourceCell)
             {
-                Debug.Log($"[CraftCell] Valid target found, swapping from {_dragSourceCell.gameObject.name} to {targetCell.gameObject.name}");
 
                 var sourceIngredient = _dragSourceCell._currentIngredient;
                 var targetIngredient = targetCell._currentIngredient;
                 bool targetWasEmpty = targetCell.IsEmpty;
 
-                Debug.Log($"[CraftCell] Source ingredient: {sourceIngredient?.name}, Target ingredient: {targetIngredient?.name}, Target was empty: {targetWasEmpty}");
 
                 // Animate drop
                 _dragRectTransform.DOMove(targetCell.transform.position, 0.2f)
                     .SetEase(Ease.InOutQuad)
                     .OnComplete(() =>
                     {
-                        Debug.Log("[CraftCell] Drop animation complete, performing swap");
                         _dragIcon.gameObject.SetActive(false);
 
                         // Perform the swap
                         if (targetWasEmpty)
                         {
-                            Debug.Log("[CraftCell] Target was empty, moving ingredient");
                             targetCell.SetItem(sourceIngredient);
                             _dragSourceCell.ClearCell();
                         }
@@ -225,7 +214,6 @@ namespace Models.Food
             }
             else
             {
-                Debug.Log("[CraftCell] No valid target found, returning to original cell");
 
                 // Return to original cell with animation
                 _dragRectTransform.DOMove(_dragSourceCell.transform.position, 0.3f)
@@ -245,7 +233,6 @@ namespace Models.Food
         {
             if (_dragRectTransform == null || _canvas == null)
             {
-                Debug.LogError($"[CraftCell] SetDragPosition FAILED - dragRectTransform: {_dragRectTransform != null}, canvas: {_canvas != null}");
                 return;
             }
 
@@ -256,16 +243,13 @@ namespace Models.Food
                 out Vector2 localPoint
             );
 
-            Debug.Log($"[CraftCell] Setting drag position to local point: {localPoint}");
             _dragRectTransform.localPosition = localPoint;
         }
 
         private void OnDestroy()
         {
-            Debug.Log($"[CraftCell] OnDestroy on {gameObject.name}");
             if (_dragIcon != null && !this.IsDestroyed())
             {
-                Debug.Log("[CraftCell] Destroying global drag icon");
                 Destroy(_dragIcon.gameObject);
             }
         }

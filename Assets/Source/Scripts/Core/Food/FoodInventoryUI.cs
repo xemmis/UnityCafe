@@ -14,12 +14,12 @@ namespace Core.Food
         [SerializeField] private Transform _visualizePos = null;
         [SerializeField] private Transform _clearPos = null;
         [SerializeField] private GameObject _uiPopap = null;
-        private bool _openFlag = false;
-        private readonly List<FoodItemCell> _cells = new();
+        [SerializeField] private bool _openFlag = false;
+        [SerializeField] private List<FoodItemCell> _cells = new();
 
         private void Start()
         {
-            BakeryInventory.OnFoodInventoryChange += OnFoodChanged;            
+            BakeryInventory.OnFoodInventoryChange += OnFoodChanged;
         }
 
         public void Visualize()
@@ -56,7 +56,7 @@ namespace Core.Food
                 .Take(_maxDisplayedItems)
                 .ToList();
 
-            EnsureCells(allFood.Count);
+            // EnsureCells(allFood.Count);
 
             for (int i = 0; i < _cells.Count; i++)
             {
@@ -67,6 +67,7 @@ namespace Core.Food
             }
         }
 
+        /* Forbidden method
         private void EnsureCells(int requiredCount)
         {
             while (_cells.Count < requiredCount && _cells.Count < _maxDisplayedItems)
@@ -75,5 +76,6 @@ namespace Core.Food
                 _cells.Add(cell);
             }
         }
+        */
     }
 }
