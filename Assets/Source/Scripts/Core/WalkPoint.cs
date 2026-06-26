@@ -11,6 +11,11 @@ namespace Core
         public bool IsReserved => _isReserved;
         public WalkType Type => _type;
 
+        private void Awake()
+        {
+            WalkManager.Instance.RegisterPoint(this);
+        }
+
         public void Reserve()
         {
             _isReserved = true;

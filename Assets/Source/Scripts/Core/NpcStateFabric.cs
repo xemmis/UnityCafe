@@ -14,9 +14,9 @@ namespace Core
                 case StateType.Idle:
                     return new IdleState(action.IntData);
                 case StateType.Walk:
-                    return new WalkState(action.WalkType);
+                    return new WalkState(WalkManager.Instance?.GetFirstFreeWalkPoint(action.WalkType));
                 case StateType.MakeOrder:
-                    return new MakeOrder();
+                    return new MakeOrder(action.IntData);
                 case StateType.Vibing:
                     Debug.Log("Vibing not realizet yet");
                     break;

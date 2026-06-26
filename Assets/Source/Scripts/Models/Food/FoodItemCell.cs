@@ -1,5 +1,5 @@
+using Core;
 using DG.Tweening;
-using Models.Food;
 using Models.Npc;
 using Specs;
 using System.Collections.Generic;
@@ -71,7 +71,7 @@ namespace Models.Food
         {
             if (IsEmpty || _currentFood == null)
                 return;
-
+            GameCondition.ChangeCameraControllCondition(false);
             _dragSourceCell = this;
 
             // Create global drag icon
@@ -115,8 +115,8 @@ namespace Models.Food
         {
             if (_dragIcon == null || !_dragIcon.gameObject.activeSelf || _dragSourceCell == null)
                 return;
+            GameCondition.ChangeCameraControllCondition(true);
 
-            // Конвертируем позицию пальца в мировые координаты
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
             worldPos.z = 0f;
 
@@ -141,9 +141,6 @@ namespace Models.Food
                     }
                 }
             }
-
-            // дальше твоя логика if (targetNpc != null) / else if (targetCell != null) / else
-
 
             if (targetNpc != null && targetNpc.CurrentAction.FoodRecipe?.FoodOutput == _currentFood)
             {
@@ -233,6 +230,7 @@ namespace Models.Food
         {
             // Базовая заглушка - вы переопределите этот метод или замените логикой
             Debug.Log($"Dropped {food.FoodName} on {npc.name}");
+            npc.NextState();
             // npc.ReceiveFood(food); // пример вызова
         }
 

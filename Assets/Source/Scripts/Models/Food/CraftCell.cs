@@ -90,7 +90,7 @@ namespace Models.Food
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-           
+            GameCondition.ChangeCameraControllCondition(false);
 
             if (IsEmpty || _currentIngredient == null)
             {
@@ -159,6 +159,7 @@ namespace Models.Food
             {
                 return;
             }
+            GameCondition.ChangeCameraControllCondition(true);
 
             // Find target cell
             var results = new List<RaycastResult>();

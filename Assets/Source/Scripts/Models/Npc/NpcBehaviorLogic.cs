@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
 using Models.States;
+using UnityEngine.UI;
 
 namespace Models.Npc
 {
@@ -15,6 +16,7 @@ namespace Models.Npc
         [SerializeField] private bool _isEmploye = false;
         [SerializeField] private NpcAction _currentAction = null;
         [SerializeField] private ActionsSO _npcSO = null;
+        [SerializeField] private Image _wishImage = null;
         private readonly Queue<IState> _stateQueue = new();
         private NavMeshAgent _agent = null;
         private Animator _animator = null;
@@ -22,6 +24,8 @@ namespace Models.Npc
         private DialogueMood _currentMood;
         private bool _isWorking = false;
         public bool IsWorking => _isWorking;
+        public Image WishImage => _wishImage;
+        public Sprite NpcIcon => _npcIcon;
         public NpcAction CurrentAction => _currentAction;
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
@@ -38,7 +42,11 @@ namespace Models.Npc
             if (_isEmploye)
                 EmployeeManager.RegisterEmployee(this);
 
-            ApplyState(new WalkState(WalkManager.Instance.GetFirstFreeWalkPoint(WalkType.Table)));
+
+            if (_currentAction != null)
+                ApplyState(NpcStateFabric.CreateState(_currentAction));
+
+
         }
 
         public void SetWorkState(bool condition)
@@ -55,8 +63,8 @@ namespace Models.Npc
         private void SetRandomMood()
         {
             var moods = (DialogueMood[])System.Enum.GetValues(typeof(DialogueMood));
-
-            _currentMood = moods[Random.Range(0, moods.Length)];
+            _currentMood = DialogueMood.Good;
+            // _currentMood = moods[Random.Range(0, moods.Length)];
         }
 
         public void Initialize(ActionsSO npcSO)
@@ -113,8 +121,10 @@ namespace Models.Npc
 
         public void OnPointerClick(PointerEventData eventData)
         {
+
             if (_currentAction.Dialogue == null)
             {
+                print("Clickk");
                 DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
             }
             else
