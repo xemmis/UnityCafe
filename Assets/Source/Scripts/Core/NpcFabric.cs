@@ -55,7 +55,7 @@ namespace Core
             }
 
             NpcBehaviorLogic npc = pool.Get();
-            npc.Initialize(_actionsSo);
+            npc.Initialize(_actionsSo, npcData.Emotes);
             return npc;
         }
 

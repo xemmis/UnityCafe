@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -3963471850930491527}
   - component: {fileID: -3045099042390842117}
   - component: {fileID: 1964039234180762573}
+  - component: {fileID: 4983368468557759671}
   m_Layer: 0
   m_Name: BreadNpc
   m_TagString: Untagged
@@ -131,16 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fa9970294b0fc4faab67f4307baf24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Models.NpcBehaviorLogic
-  _npcIcon: {fileID: -7605009923466122419, guid: e81b02b797585e54b84905df0454d01d, type: 3}
-  _isEmploye: 0
-  _currentAction:
-    <Dialogue>k__BackingField: {fileID: 0}
-    <StateType>k__BackingField: 0
-    <WalkType>k__BackingField: 0
-    <FoodRecipe>k__BackingField: {fileID: 0}
-    <IntData>k__BackingField: 0
   _npcSO: {fileID: 0}
-  _wishImage: {fileID: 5380331624571212535}
+  _isEmploye: 0
 --- !u!114 &-3963471850930491527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +214,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.2241945, y: 1.0800471}
   m_EdgeRadius: 0
+--- !u!114 &4983368468557759671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110613068325522175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d394602a7982ab4a834adfdb0b7625c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Npc.NpcInteraction
+  _npcIcon: {fileID: -7605009923466122419, guid: e81b02b797585e54b84905df0454d01d, type: 3}
+  _currentMood: 0
 --- !u!1 &4422573074850519853
 GameObject:
   m_ObjectHideFlags: 0

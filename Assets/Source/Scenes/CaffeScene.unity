@@ -172,25 +172,57 @@ PrefabInstance:
       value: BreadNpc
       objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: _npcSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 79b42d0ce9ba05043b789475465d03eb, type: 2}
+    - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _isEmploye
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: _emoteContainer
+      value: 
+      objectReference: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _currentAction.<IntData>k__BackingField
       value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _currentAction.<WalkType>k__BackingField
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _currentAction.<StateType>k__BackingField
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _currentAction.<FoodRecipe>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: 36557e1f6f94d6a4c8a2047a6fd3b92f, type: 2}
+    - target: {fileID: 4497267379950289225, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389305826008449763, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99999726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389305826008449763, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389305826008449763, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389305826008449763, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0023670695
+      objectReference: {fileID: 0}
+    - target: {fileID: 6389305826008449763, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.271
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8385,7 +8417,7 @@ Camera:
     x: 0
     y: 0
     width: 1
-    height: 0.99999994
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

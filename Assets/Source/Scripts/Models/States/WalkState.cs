@@ -27,12 +27,15 @@ namespace Models.States
         {
             _agent = controller.Agent;
             _animator = controller.Animator;
+
             if (_point == null)
             {
-                Debug.Log("Point == null");
+                controller.SetEmote(EmoteType.Dissapointed);
+                controller.NextState();
                 return;
             }
 
+            controller.SetEmote(EmoteType.Happy);
             if (_point.Type != WalkType.Leave)
                 _point.Reserve();
 
@@ -41,9 +44,10 @@ namespace Models.States
 
         public void Exit(NpcBehaviorLogic controller)
         {
-            if (_point.Type != WalkType.Leave)
+            if (_point != null && _point.Type != WalkType.Leave)
                 _point.CancelReservation();
 
+            controller.ClearEmote();
             _point = null;
             _agent = null;
             _animator = null;
