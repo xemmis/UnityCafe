@@ -1,6 +1,7 @@
 using Specs;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Models.Plant
 {
@@ -13,8 +14,6 @@ namespace Models.Plant
         private PlantBehavior _plantBehavior;
         private bool _progressEnabled = false;
         private bool _hasWish = false;
-        private Color _transparent = new Color(1, 1, 1, 0);
-        private Color _visible = new Color(1, 1, 1, 1);
 
         private void Start()
         {
@@ -83,7 +82,7 @@ namespace Models.Plant
             }
 
             // Показываем прогресс-бар
-            _progressImage.color = _visible;
+            _progressImage.color = ColorExtensions.Visible();
 
             // Скрываем всё остальное
             HidePopup();
@@ -99,10 +98,10 @@ namespace Models.Plant
             }
 
             // Показываем иконку ингредиента в прогресс-баре
-            _progressImage.color = _visible;
+            _progressImage.color = ColorExtensions.Visible();
 
             // Скрываем иконку пожелания, если она была
-            _wishImage.color = _transparent;
+            _wishImage.color = ColorExtensions.Transparent;
 
             // Можно добавить анимацию или эффект
             if (!_progressImage.gameObject.activeSelf)
@@ -119,15 +118,15 @@ namespace Models.Plant
             }
 
             // Показываем иконку пожелания
-            _wishImage.color = _visible;
+            _wishImage.color = ColorExtensions.Visible();
 
             // Прогресс-бар можно скрыть или оставить
-            _progressImage.color = _transparent;
+            _progressImage.color = ColorExtensions.Transparent;
         }
 
         private void HideWish()
         {
-            _wishImage.color = _transparent;
+            _wishImage.color = ColorExtensions.Transparent;
             _wishImage.sprite = null;
 
             // Если растение не готово к сбору, скрываем попап
@@ -147,8 +146,8 @@ namespace Models.Plant
 
         private void HideAll()
         {
-            _progressImage.color = _transparent;
-            _wishImage.color = _transparent;
+            _progressImage.color = ColorExtensions.Transparent;
+            _wishImage.color = ColorExtensions.Transparent;
             HidePopup();
         }
 

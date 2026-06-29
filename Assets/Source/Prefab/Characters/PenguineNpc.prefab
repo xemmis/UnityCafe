@@ -53,12 +53,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1964039234180762573, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_Size.y
+      value: 1.2097905
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964039234180762573, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.026208162
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964039234180762573, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.024774164
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964039234180762573, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.19
+      value: 1.3571428
       objectReference: {fileID: 0}
     - target: {fileID: 1964039234180762573, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.18
+      value: 1.2857143
       objectReference: {fileID: 0}
     - target: {fileID: 2110613068325522175, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_Name
@@ -68,6 +80,10 @@ PrefabInstance:
       propertyPath: _npcIcon
       value: 
       objectReference: {fileID: 2040353678026209026, guid: 57b5a9df315a10c4fa6556d5c492a9f9, type: 3}
+    - target: {fileID: 4983368468557759671, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+      propertyPath: _npcIcon
+      value: 
+      objectReference: {fileID: 8814596855027439504, guid: 510d68c2433c4814f8fafaffffa1c2b8, type: 3}
     - target: {fileID: 5541789347535331228, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_Sprite
       value: 

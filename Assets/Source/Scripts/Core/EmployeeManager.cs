@@ -23,8 +23,7 @@ namespace Core
                     Debug.Log("Has");
                     continue;
                 }
-                npc.SetWorkState(true);
-                npc.Initialize(Recipe.NpcActions);
+                npc.SetWorkState(true, Recipe);
             }
         }
     }

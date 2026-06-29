@@ -2,6 +2,7 @@ namespace Models.Furniture
 {
     using Core;
     using UnityEngine;
+    using Utils;
 
     public sealed class FurnitureVisualizer
     {
@@ -10,10 +11,6 @@ namespace Models.Furniture
         private readonly FurnutureData _data;
         private bool _isSolded;
         private int _upgradeIndex;
-
-        private static readonly Color BuildingMode = new(1, 1, 1, 0.4f);
-        private static readonly Color Transparent = new(1, 1, 1, 0);
-        private static readonly Color Visible = new(1, 1, 1, 1);
 
         public FurnitureVisualizer(SpriteRenderer spriteRenderer, SpriteRenderer[] dependentRenderers, FurnutureData furnutureData)
         {
@@ -43,21 +40,21 @@ namespace Models.Furniture
                 if (hasNextSprite)
                 {
                     _furnitureRenderer.sprite = _data.FurnitureStages[_upgradeIndex].NextStageSprite;
-                    _furnitureRenderer.color = BuildingMode;
-                    UpdateDependents(_upgradeIndex, BuildingMode);
+                    _furnitureRenderer.color = ColorExtensions.Visible(.4f);
+                    UpdateDependents(_upgradeIndex, ColorExtensions.Visible(.4f));
                 }
                 else
                 {
                     _furnitureRenderer.sprite = _data.FurnitureStages[currentIndex].CurrentStageSprite;
-                    _furnitureRenderer.color = Visible;
-                    UpdateDependents(currentIndex, Visible);
+                    _furnitureRenderer.color = ColorExtensions.Visible();
+                    UpdateDependents(currentIndex, ColorExtensions.Visible());
                 }
             }
             else
             {
                 _furnitureRenderer.sprite = _data.FurnitureStages[0].CurrentStageSprite;
-                _furnitureRenderer.color = BuildingMode;
-                UpdateDependents(0, BuildingMode);
+                _furnitureRenderer.color = ColorExtensions.Visible(.4f);
+                UpdateDependents(0, ColorExtensions.Visible(.4f));
             }
         }
 
@@ -67,12 +64,12 @@ namespace Models.Furniture
             {
                 int currentIndex = _upgradeIndex - 1;
                 _furnitureRenderer.sprite = _data.FurnitureStages[currentIndex].CurrentStageSprite;
-                _furnitureRenderer.color = Visible;
-                UpdateDependents(currentIndex, Visible);
+                _furnitureRenderer.color = ColorExtensions.Visible();
+                UpdateDependents(currentIndex, ColorExtensions.Visible());
             }
             else
             {
-                _furnitureRenderer.color = Transparent;
+                _furnitureRenderer.color = ColorExtensions.Transparent;
                 HideDependents();
             }
         }
@@ -99,7 +96,7 @@ namespace Models.Furniture
             foreach (SpriteRenderer renderer in _dependentRenderers)
             {
                 if (renderer != null)
-                    renderer.color = Transparent;
+                    renderer.color = ColorExtensions.Transparent;
             }
         }
 
