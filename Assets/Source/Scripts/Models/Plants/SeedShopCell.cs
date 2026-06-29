@@ -21,6 +21,8 @@ namespace Models.Plant
         private void Start()
         {
             if (_plantData == null) return;
+            if (_seedSprite == null) _seedSprite = GetComponentInChildren<Image>();
+
 
             _seedSprite.sprite = _plantData.Ingredinet.Icon;
         }
