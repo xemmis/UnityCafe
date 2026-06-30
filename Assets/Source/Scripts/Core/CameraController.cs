@@ -7,16 +7,15 @@ namespace Core
     public sealed class CameraController : MonoBehaviour
     {
         [SerializeField] private InputActionAsset _inputAsset;
-        [SerializeField] private float panSpeed = 0.05f;
+        [SerializeField] private float panSpeed = 5f;
         [SerializeField] private float smoothTime = 0.3f;
-        [SerializeField] private float inertiaDamping = 8f;
-        [SerializeField] private float minX = -15f;
-        [SerializeField] private float maxX = 15f;
+        [SerializeField] private float minX = -10f;
+        [SerializeField] private float maxX = 10f;
+
         private InputAction _pressAction;
         private InputAction _pointerAction;
         private InputAction _keyboardAction;
         private Vector2 _lastPointerPosition;
-        private float _inertiaVelocity;
         private bool _isDragging;
         private float _targetX;
         private Tween _moveTween;
@@ -32,6 +31,8 @@ namespace Core
             _pointerAction.performed += OnPointerMove;
             _keyboardAction.performed += OnKeyboard;
             _keyboardAction.canceled += OnKeyboardCanceled;
+
+
         }
 
         private void Start()
@@ -39,6 +40,12 @@ namespace Core
             _targetX = transform.position.x;
             EnableMovement();
             GameCondition.OnCameraConditionChanged += HandleCameraCondition;
+        }
+
+        private void HandleCameraCondition(bool condition)
+        {
+            if (condition) EnableMovement();
+            else DisableMovement();
         }
 
         private void OnDestroy()
@@ -66,7 +73,6 @@ namespace Core
             _keyboardAction.Disable();
 
             _isDragging = false;
-            _inertiaVelocity = 0f;
             _moveTween?.Kill();
         }
 
@@ -74,7 +80,6 @@ namespace Core
         {
             _isDragging = true;
             _moveTween?.Kill();
-            _inertiaVelocity = 0f;
             _lastPointerPosition = _pointerAction.ReadValue<Vector2>();
         }
 
@@ -87,51 +92,24 @@ namespace Core
         {
             if (!_isDragging) return;
 
-            Vector2 currentPosition = context.ReadValue<Vector2>();
-            float delta = currentPosition.x - _lastPointerPosition.x;
-
-            _inertiaVelocity = -delta * panSpeed;
-
-            float newX = transform.position.x - delta * panSpeed;
-            newX = Mathf.Clamp(newX, minX, maxX);
-            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
-
-            _lastPointerPosition = currentPosition;
+            Vector2 delta = context.ReadValue<Vector2>() - _lastPointerPosition;
+            _targetX = Mathf.Clamp(transform.position.x - delta.x * panSpeed * Time.deltaTime, minX, maxX);
+            transform.position = new Vector3(_targetX, transform.position.y, transform.position.z);
+            _lastPointerPosition = context.ReadValue<Vector2>();
         }
 
         private void OnKeyboard(InputAction.CallbackContext context)
         {
             _moveTween?.Kill();
-            _inertiaVelocity = 0f;
             float input = context.ReadValue<Vector2>().x;
             _targetX = Mathf.Clamp(transform.position.x + input * 100f, minX, maxX);
+
             _moveTween = transform.DOMoveX(_targetX, smoothTime).SetEase(Ease.OutQuad);
         }
 
         private void OnKeyboardCanceled(InputAction.CallbackContext context)
         {
             _moveTween?.Kill();
-        }
-
-        private void Update()
-        {
-            if (_isDragging) return;
-            if (Mathf.Abs(_inertiaVelocity) < 0.001f) return;
-
-            float newX = transform.position.x + _inertiaVelocity;
-            newX = Mathf.Clamp(newX, minX, maxX);
-            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
-
-            _inertiaVelocity = Mathf.Lerp(_inertiaVelocity, 0f, inertiaDamping * Time.deltaTime);
-
-            if (newX <= minX || newX >= maxX)
-                _inertiaVelocity = 0f;
-        }
-
-        private void HandleCameraCondition(bool condition)
-        {
-            if (condition) EnableMovement();
-            else DisableMovement();
         }
     }
 }

@@ -1,4 +1,3 @@
-using DG.Tweening;
 using Specs;
 using System.Collections;
 using TMPro;
@@ -12,9 +11,7 @@ namespace Core.Dialogue
         [SerializeField] private float _textSpeed = 0.1f;
         [SerializeField] private TextMeshProUGUI _tmp = null;
         [SerializeField] private Image _icon = null;
-        [SerializeField] private Transform _openPos = null;
-        [SerializeField] private Transform _closePos = null;
-        [SerializeField] private GameObject _container = null;
+
         private DialogueNode _currentNode = null;
         private Coroutine _revealCoroutine = null;
         private bool _isRevealing = false;
@@ -30,7 +27,7 @@ namespace Core.Dialogue
         public void Visualize(DialogueNode node, Sprite sprite = null)
         {
             _currentNode = node;
-            _container.transform.DOMove(_openPos.position, .45f);
+
             if (_currentNode == null)
             {
                 ClearText();
@@ -41,7 +38,7 @@ namespace Core.Dialogue
 
             if (sprite != null)
             {
-                _icon.color = Color.white;
+                _icon.color = Color.black; 
                 _icon.sprite = sprite;
             }
 
@@ -77,11 +74,9 @@ namespace Core.Dialogue
 
         public void ClearText()
         {
-            _container.transform.DOMove(_closePos.position, .45f);
             StopRevealCoroutine();
+            _icon.color = Color.clear; 
             _tmp.text = "";
-            _icon.sprite = null;
-            _icon.color = Color.clear;
         }
 
         private void StopRevealCoroutine()

@@ -11,27 +11,26 @@ namespace Models.States
             _idleTime = idleTime;
         }
 
-        protected float _idleTime = 0;
-        protected Animator _animator = null;
+        private float _idleTime = 0;
+        private Animator _animator = null;
 
-        public virtual void Enter(NpcBehaviorLogic controller)
+        public void Enter(NpcBehaviorLogic controller)
         {
             _animator = controller.Animator;
             _animator.SetTrigger("Idle");
         }
 
-        public virtual void Exit(NpcBehaviorLogic controller)
+        public void Exit(NpcBehaviorLogic controller)
         {
             _animator = null;
         }
 
-        public virtual void Update(NpcBehaviorLogic controller)
+        public void Update(NpcBehaviorLogic controller)
         {
             _idleTime -= Time.deltaTime;
 
             if (_idleTime <= 0)
             {
-                controller.SetEmote(Core.EmoteType.Happy);
                 controller.NextState();
             }
         }

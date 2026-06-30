@@ -1,37 +1,36 @@
+using Core.Dialogue;
+using Core;
+using Specs;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.AI;
+using Models.States;
+
 namespace Models.Npc
 {
-    using Core;
-    using Models.Food;
-    using Models.States;
-    using Specs;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.AI;
-    using UnityEngine.UI;
-
-    public sealed class NpcBehaviorLogic : MonoBehaviour
+    public sealed class NpcBehaviorLogic : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private ActionsSO _npcSO = null;
+        [SerializeField] private Sprite _npcIcon = null;
         [SerializeField] private bool _isEmploye = false;
-
+        [SerializeField] private NpcAction _currentAction = null;
+        [SerializeField] private ActionsSO _npcSO = null;
         private readonly Queue<IState> _stateQueue = new();
-        private NavMeshAgent _agent;
-        private Animator _animator;
-        private IState _currentState;
-        private bool _isWorking;
-
+        private NavMeshAgent _agent = null;
+        private Animator _animator = null;
+        private IState _currentState = null;
+        private DialogueMood _currentMood;
+        private bool _isWorking = false;
         public bool IsWorking => _isWorking;
-        public NpcAction CurrentAction { get; private set; }
+        public NpcAction CurrentAction => _currentAction;
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
 
-        private NpcVisualizer _visualizer;
-
         private void Awake()
         {
-            TryGetComponent(out _agent);
-            TryGetComponent(out _animator);
-            _visualizer = new NpcVisualizer(GetComponentInChildren<Image>());
+            SetRandomMood();
+
+            InitializeComponents();
         }
 
         private void Start()
@@ -39,20 +38,40 @@ namespace Models.Npc
             if (_isEmploye)
                 EmployeeManager.RegisterEmployee(this);
 
-            Initialize(_npcSO, _visualizer.EmoteContainer);
+            ApplyState(new WalkState(WalkManager.Instance.GetFirstFreeWalkPoint(WalkType.Table)));
         }
 
-        public void Initialize(ActionsSO npcSO, EmoteContainer emoteContainer = null)
+        public void SetWorkState(bool condition)
+        {
+            _isWorking = condition;
+        }
+
+        private void InitializeComponents()
+        {
+            TryGetComponent<NavMeshAgent>(out _agent);
+            TryGetComponent<Animator>(out _animator);
+        }
+
+        private void SetRandomMood()
+        {
+            var moods = (DialogueMood[])System.Enum.GetValues(typeof(DialogueMood));
+
+            _currentMood = moods[Random.Range(0, moods.Length)];
+        }
+
+        public void Initialize(ActionsSO npcSO)
         {
             _npcSO = npcSO;
-            int rand = Random.Range(0, npcSO.Actions.Count);
+            int rand = Random.Range(0, npcSO.Actions.Count - 1);
 
-            InitializeActions(npcSO.Actions[rand].Actions);
-
-            _visualizer.Initialize(emoteContainer);
+            foreach (NpcAction npcAction in npcSO.Actions[rand].Actions)
+            {
+                IState state = NpcStateFabric.CreateState(npcAction);
+                _stateQueue.Enqueue(state);
+            }
         }
 
-        private void InitializeActions(List<NpcAction> actions)
+        public void Initialize(List<NpcAction> actions)
         {
             foreach (NpcAction npcAction in actions)
             {
@@ -61,26 +80,6 @@ namespace Models.Npc
             }
             NextState();
         }
-
-        public void SetWorkState(bool condition, FoodRecipe recipe = null)
-        {
-            _isWorking = condition;
-
-            if (recipe == null) return;
-
-            InitializeActions(recipe.NpcActions);
-        }
-
-        public void SetEmote(EmoteType type, float chance = 100f)
-        {
-            if (Random.Range(0f, 100f) <= chance)
-                _visualizer.SetEmote(type);
-        }
-        public void SetWish(Sprite sprite)
-        {
-            _visualizer.SetSprite(sprite);
-        }
-        public void ClearEmote() => _visualizer.ClearEmote();
 
         public void ChangeState(IState newState)
         {
@@ -95,9 +94,7 @@ namespace Models.Npc
                 ApplyState(_stateQueue.Dequeue());
                 return;
             }
-
             _isWorking = false;
-            ClearEmote();
             ApplyState(_isEmploye ? new IdleState() : new ExitState());
         }
 
@@ -105,12 +102,25 @@ namespace Models.Npc
         {
             _currentState?.Exit(this);
             _currentState = newState;
+            print(newState.GetType());
             _currentState?.Enter(this);
         }
 
-        private void FixedUpdate()
+        public void FixedUpdate()
         {
             _currentState?.Update(this);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_currentAction.Dialogue == null)
+            {
+                DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
+            }
+            else
+            {
+                DialogueSystem.Instance.StartDialogue(_currentAction.Dialogue, _npcIcon);
+            }
         }
     }
 }

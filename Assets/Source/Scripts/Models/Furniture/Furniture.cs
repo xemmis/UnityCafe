@@ -1,3 +1,7 @@
+using Models.Furniture;
+using Specs;
+using UnityEngine.UI;
+
 namespace Models.Furniture
 {
     using Core;
@@ -20,7 +24,7 @@ namespace Models.Furniture
         private bool IsSold => _currentStageIndex > 0;
         private bool HasNextStage => _currentStageIndex < _data.FurnitureStages.Count
                                      && _data.FurnitureStages[_currentStageIndex].NextStageSprite != null;
-        public int CurrentLevel => _currentStageIndex;
+
         [SerializeField] private SpriteRenderer[] _dependentRenderers;
 
         private void Awake()
@@ -63,6 +67,7 @@ namespace Models.Furniture
 
                 _registerFlag = true;
             }
+
             _shaker.StopShaking();
             GameCondition.ChangeBuildingModeCondition(false);
         }
