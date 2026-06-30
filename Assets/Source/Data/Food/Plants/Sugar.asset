@@ -16,7 +16,7 @@ MonoBehaviour:
   <Stages>k__BackingField:
   - <StageSprite>k__BackingField: {fileID: 944254425, guid: 9e2aa76dd9d7e384d8dfe86f3112f8b4, type: 3}
     <GrowTimer>k__BackingField: 15
-  - <StageSprite>k__BackingField: {fileID: 1850978069, guid: 9e2aa76dd9d7e384d8dfe86f3112f8b4, type: 3}
+  - <StageSprite>k__BackingField: {fileID: 2063653456, guid: 9e2aa76dd9d7e384d8dfe86f3112f8b4, type: 3}
     <GrowTimer>k__BackingField: 15
   <IngredientOutput>k__BackingField: 1
   <PlantCost>k__BackingField: 15

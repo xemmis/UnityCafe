@@ -263,7 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.SeedShopCell
   _plantData: {fileID: 11400000, guid: f424a316d7fd2d14ab9138838dbebc51, type: 2}
   _buyBtn: {fileID: 79275875}
-  _seedSprite: {fileID: 79275876}
+  _seedSprite: {fileID: 0}
   _isSolded: 0
 --- !u!114 &28553865
 MonoBehaviour:
@@ -826,7 +826,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5756946994958534759, guid: c70ce4e219a06db4c85696c5eae7e5d6, type: 3}
+  m_Sprite: {fileID: -3765290273801814435, guid: e522aba841ab2e04da0dceddd8a46739, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.SeedShopCell
   _plantData: {fileID: 11400000, guid: 22cd21657c333f64fa71f6117d20121e, type: 2}
   _buyBtn: {fileID: 1634260813}
-  _seedSprite: {fileID: 1634260814}
+  _seedSprite: {fileID: 0}
   _isSolded: 0
 --- !u!114 &122884104
 MonoBehaviour:
@@ -7715,7 +7715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.SeedShopCell
   _plantData: {fileID: 11400000, guid: bf6ee85e04aced64b87730efb1f70e6a, type: 2}
   _buyBtn: {fileID: 731380644}
-  _seedSprite: {fileID: 731380645}
+  _seedSprite: {fileID: 0}
   _isSolded: 0
 --- !u!114 &1075733697
 MonoBehaviour:
@@ -8185,7 +8185,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.09375
+  orthographic size: 6.6875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8318,7 +8318,7 @@ MonoBehaviour:
   _inputAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   panSpeed: 0.5
   smoothTime: 0.3
-  minX: -25
+  minX: -15
   maxX: 10
 --- !u!114 &1123024539
 MonoBehaviour:
@@ -11264,7 +11264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.SeedShopCell
   _plantData: {fileID: 11400000, guid: c439c8415ba324b458be9a06edc5cd9e, type: 2}
   _buyBtn: {fileID: 308216769}
-  _seedSprite: {fileID: 308216770}
+  _seedSprite: {fileID: 0}
   _isSolded: 0
 --- !u!114 &1541765232
 MonoBehaviour:
@@ -12827,7 +12827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.SeedShopCell
   _plantData: {fileID: 11400000, guid: bcd99a4c36fd1a24c81beea8f3315b07, type: 2}
   _buyBtn: {fileID: 2089828055}
-  _seedSprite: {fileID: 2089828056}
+  _seedSprite: {fileID: 0}
   _isSolded: 0
 --- !u!114 &1675418237
 MonoBehaviour:
@@ -15049,7 +15049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.SeedShopCell
   _plantData: {fileID: 11400000, guid: e899c6614057b4741ad88f574b5702c9, type: 2}
   _buyBtn: {fileID: 167018311}
-  _seedSprite: {fileID: 167018312}
+  _seedSprite: {fileID: 0}
   _isSolded: 0
 --- !u!114 &2032293897
 MonoBehaviour:
