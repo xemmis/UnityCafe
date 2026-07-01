@@ -16,7 +16,8 @@ namespace Core
         [SerializeField] private ActionsSO _actionsSo = null;
 
         private readonly Dictionary<NpcData, ObjectPool<NpcBehaviorLogic>> _pools = new();
-        private readonly List<NpcBehaviorLogic> _activeNpcs = new();
+        private readonly Dictionary<NpcBehaviorLogic, NpcData> _activeNpcs = new();
+        private List<NpcData> _validDatas = new();
         private Coroutine _spawnRoutine;
 
         public static NpcFabric Instance { get; private set; } = null;
@@ -50,11 +51,18 @@ namespace Core
 
                 var pool = new ObjectPool<NpcBehaviorLogic>(logic, _initialPoolSize, _maxPoolSize, transform);
                 _pools[npcData] = pool;
+                _validDatas.Add(npcData); // только те, для кого пул создан
             }
         }
 
         private void Start()
         {
+            if (_validDatas.Count == 0)
+            {
+                Debug.LogWarning("[NpcFabric] No valid NpcData — spawn routine won't start.");
+                return;
+            }
+
             _spawnRoutine = StartCoroutine(SpawnRoutine());
         }
 
@@ -65,14 +73,13 @@ namespace Core
                 yield return new WaitForSeconds(Random.Range(_spawnTick.x, _spawnTick.y));
 
                 if (_activeNpcs.Count >= _maxActiveNpcs) continue;
-                if (_pools.Count == 0) continue;
 
-                NpcData randomData = _npcDatas[Random.Range(0, _npcDatas.Count)];
+                NpcData randomData = _validDatas[Random.Range(0, _validDatas.Count)];
                 NpcBehaviorLogic npc = Spawn(randomData);
 
                 if (npc != null)
                 {
-                    _activeNpcs.Add(npc);
+                    _activeNpcs.Add(npc, randomData);
                     npc.OnDespawn += HandleNpcDespawn;
                 }
             }
@@ -81,7 +88,12 @@ namespace Core
         private void HandleNpcDespawn(NpcBehaviorLogic npc)
         {
             npc.OnDespawn -= HandleNpcDespawn;
-            _activeNpcs.Remove(npc);
+
+            if (_activeNpcs.TryGetValue(npc, out NpcData data))
+            {
+                _activeNpcs.Remove(npc);
+                Despawn(data, npc);
+            }
         }
 
         public NpcBehaviorLogic Spawn(NpcData npcData)
@@ -113,17 +125,15 @@ namespace Core
             if (_spawnRoutine != null)
                 StopCoroutine(_spawnRoutine);
 
-            foreach (var npc in _activeNpcs)
-            {
-                if (npc != null)
-                    npc.OnDespawn -= HandleNpcDespawn;
-            }
+            foreach (NpcBehaviorLogic npc in new List<NpcBehaviorLogic>(_activeNpcs.Keys))
+                npc.OnDespawn -= HandleNpcDespawn;
 
             foreach (var pool in _pools.Values)
                 pool.Dispose();
 
             _pools.Clear();
             _activeNpcs.Clear();
+            _validDatas.Clear();
         }
     }
 }

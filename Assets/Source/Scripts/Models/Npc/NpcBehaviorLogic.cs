@@ -22,6 +22,7 @@ namespace Models.Npc
         private bool _isWorking;
 
         public bool IsWorking => _isWorking;
+        public event System.Action<NpcBehaviorLogic> OnDespawn;
         public NpcAction CurrentAction { get; private set; }
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
@@ -39,18 +40,16 @@ namespace Models.Npc
         {
             if (_isEmploye)
                 EmployeeManager.RegisterEmployee(this);
-
-
         }
 
         public void Initialize(ActionsSO npcSO, EmoteContainer emoteContainer = null)
         {
             _npcSO = npcSO;
-            int rand = Random.Range(0, npcSO.Actions.Count);
-
-            InitializeActions(npcSO.Actions[rand].Actions);
             _container = emoteContainer;
             _visualizer.Initialize(emoteContainer);
+
+            int rand = Random.Range(0, npcSO.Actions.Count);
+            InitializeActions(npcSO.Actions[rand].Actions);
         }
 
         private void InitializeActions(List<NpcAction> actions)
@@ -71,9 +70,14 @@ namespace Models.Npc
 
             InitializeActions(recipe.NpcActions);
         }
+
         public void SetEmote(EmoteType type, float chance = 45f, float duration = 5f)
         {
-            if (Random.Range(0f, 100f) > chance) return;
+            if (Random.Range(0f, 100f) > chance)
+            {
+                print("Rett");
+                return;
+            }
 
             _visualizer.SetEmote(type);
             _visualizer.ClearAfterDelay(duration);
@@ -104,7 +108,6 @@ namespace Models.Npc
             ApplyState(_isEmploye ? new IdleState() : new ExitState());
         }
 
-        public event System.Action<NpcBehaviorLogic> OnDespawn;
 
         // В ApplyState когда доходит до ExitState:
         private void ApplyState(IState newState)
@@ -112,9 +115,11 @@ namespace Models.Npc
             _currentState?.Exit(this);
             _currentState = newState;
             _currentState?.Enter(this);
+        }
 
-            if (newState is ExitState)
-                OnDespawn?.Invoke(this);
+        public void ReturnToPool()
+        {
+            OnDespawn?.Invoke(this);
         }
 
         private void FixedUpdate()
