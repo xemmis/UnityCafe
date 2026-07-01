@@ -13,7 +13,8 @@ namespace Models.Npc
     {
         [SerializeField] private ActionsSO _npcSO = null;
         [SerializeField] private bool _isEmploye = false;
-
+        [SerializeField] private Image _emoteSprite = null;
+        [SerializeField] private EmoteContainer _container = null;
         private readonly Queue<IState> _stateQueue = new();
         private NavMeshAgent _agent;
         private Animator _animator;
@@ -31,7 +32,7 @@ namespace Models.Npc
         {
             TryGetComponent(out _agent);
             TryGetComponent(out _animator);
-            _visualizer = new NpcVisualizer(GetComponentInChildren<Image>());
+            _visualizer = new NpcVisualizer(_emoteSprite, this);
         }
 
         private void Start()
@@ -39,7 +40,7 @@ namespace Models.Npc
             if (_isEmploye)
                 EmployeeManager.RegisterEmployee(this);
 
-            Initialize(_npcSO, _visualizer.EmoteContainer);
+
         }
 
         public void Initialize(ActionsSO npcSO, EmoteContainer emoteContainer = null)
@@ -48,7 +49,7 @@ namespace Models.Npc
             int rand = Random.Range(0, npcSO.Actions.Count);
 
             InitializeActions(npcSO.Actions[rand].Actions);
-
+            _container = emoteContainer;
             _visualizer.Initialize(emoteContainer);
         }
 
@@ -70,17 +71,20 @@ namespace Models.Npc
 
             InitializeActions(recipe.NpcActions);
         }
-
-        public void SetEmote(EmoteType type, float chance = 100f)
+        public void SetEmote(EmoteType type, float chance = 45f, float duration = 5f)
         {
-            if (Random.Range(0f, 100f) <= chance)
-                _visualizer.SetEmote(type);
+            if (Random.Range(0f, 100f) > chance) return;
+
+            _visualizer.SetEmote(type);
+            _visualizer.ClearAfterDelay(duration);
         }
+
         public void SetWish(Sprite sprite)
         {
             _visualizer.SetSprite(sprite);
         }
-        public void ClearEmote() => _visualizer.ClearEmote();
+
+        private void ClearEmote() => _visualizer.ClearEmote();
 
         public void ChangeState(IState newState)
         {
@@ -97,15 +101,20 @@ namespace Models.Npc
             }
 
             _isWorking = false;
-            ClearEmote();
             ApplyState(_isEmploye ? new IdleState() : new ExitState());
         }
 
+        public event System.Action<NpcBehaviorLogic> OnDespawn;
+
+        // В ApplyState когда доходит до ExitState:
         private void ApplyState(IState newState)
         {
             _currentState?.Exit(this);
             _currentState = newState;
             _currentState?.Enter(this);
+
+            if (newState is ExitState)
+                OnDespawn?.Invoke(this);
         }
 
         private void FixedUpdate()

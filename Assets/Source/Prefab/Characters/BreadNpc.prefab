@@ -132,8 +132,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fa9970294b0fc4faab67f4307baf24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Models.NpcBehaviorLogic
-  _npcSO: {fileID: 0}
+  _npcSO: {fileID: 11400000, guid: 79b42d0ce9ba05043b789475465d03eb, type: 2}
   _isEmploye: 0
+  _emoteSprite: {fileID: 5380331624571212535}
 --- !u!114 &-3963471850930491527
 MonoBehaviour:
   m_ObjectHideFlags: 0

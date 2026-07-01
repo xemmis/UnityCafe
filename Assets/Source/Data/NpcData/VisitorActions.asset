@@ -16,6 +16,6 @@ MonoBehaviour:
   - <Actions>k__BackingField:
     - <Dialogue>k__BackingField: {fileID: 0}
       <StateType>k__BackingField: 1
-      <WalkType>k__BackingField: 1
+      <WalkType>k__BackingField: 3
       <FoodRecipe>k__BackingField: {fileID: 0}
       <IntData>k__BackingField: 0

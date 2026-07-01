@@ -29,7 +29,6 @@ namespace Models.States
         {
             BakeryInventory.Add(_recipe.FoodOutput);
             _recipe = null;
-            controller.ClearEmote();
         }
 
         public void Update(NpcBehaviorLogic controller)

@@ -30,7 +30,7 @@ namespace Models.States
 
             if (_point == null)
             {
-                controller.SetEmote(EmoteType.Dissapointed);
+                controller.SetEmote(EmoteType.Dissapointed, 100);
                 controller.NextState();
                 return;
             }
@@ -47,7 +47,6 @@ namespace Models.States
             if (_point != null && _point.Type != WalkType.Leave)
                 _point.CancelReservation();
 
-            controller.ClearEmote();
             _point = null;
             _agent = null;
             _animator = null;

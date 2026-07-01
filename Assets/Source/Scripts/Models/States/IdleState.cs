@@ -31,7 +31,7 @@ namespace Models.States
 
             if (_idleTime <= 0)
             {
-                controller.SetEmote(Core.EmoteType.Happy);
+                controller.SetEmote(Core.EmoteType.Happy,3);
                 controller.NextState();
             }
         }
