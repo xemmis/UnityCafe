@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Penguin
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
   <Prefab>k__BackingField: {fileID: 1068660410517492684, guid: ec3a898639437a843a28588ebac3cdf0, type: 3}
+  <Emotes>k__BackingField: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}

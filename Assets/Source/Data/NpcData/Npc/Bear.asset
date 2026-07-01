@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Bear
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
   <Prefab>k__BackingField: {fileID: 3106239008168643676, guid: 103dc95101d1a6a4ca174e27550fc7f8, type: 3}
+  <Emotes>k__BackingField: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Frog
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
   <Prefab>k__BackingField: {fileID: 6322312010337292000, guid: 9643a60232553114eba38de5f41bf12e, type: 3}
+  <Emotes>k__BackingField: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Mushroom
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
   <Prefab>k__BackingField: {fileID: 7719576155104757507, guid: d389db215a472bf42b722be3797b46b1, type: 3}
+  <Emotes>k__BackingField: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Kitty
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
   <Prefab>k__BackingField: {fileID: 5959476499533403673, guid: 0af832592f4762840b6f18f6bc46273d, type: 3}
+  <Emotes>k__BackingField: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}
