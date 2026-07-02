@@ -122,7 +122,7 @@ namespace Models.Food
 
             // Ищем NPC через Physics2D overlap
             Collider2D hit = Physics2D.OverlapPoint(worldPos);
-            NpcBehaviorLogic targetNpc = hit?.GetComponent<NpcBehaviorLogic>();
+            NpcInteraction targetNpc = hit?.GetComponent<NpcInteraction>();
 
             // UI ячейки ищем как раньше через RaycastAll
             FoodItemCell targetCell = null;
@@ -142,7 +142,7 @@ namespace Models.Food
                 }
             }
 
-            if (targetNpc != null && targetNpc.CurrentAction.FoodRecipe?.FoodOutput == _currentFood)
+            if (targetNpc != null && targetNpc.IsWaitingFood)
             {
                 // Конвертируем мировую позицию NPC в позицию на Canvas
                 Vector2 screenPos = Camera.main.WorldToScreenPoint(targetNpc.transform.position);
@@ -226,11 +226,11 @@ namespace Models.Food
         }
 
         // Метод для обработки дропа на NPC - здесь будет ваша логика
-        protected virtual void HandleDropOnNpc(NpcBehaviorLogic npc, FoodItem food)
+        protected virtual void HandleDropOnNpc(NpcInteraction npc, FoodItem food)
         {
             // Базовая заглушка - вы переопределите этот метод или замените логикой
             Debug.Log($"Dropped {food.FoodName} on {npc.name}");
-            npc.NextState();
+            npc.AcceptFood(food);
             // npc.ReceiveFood(food); // пример вызова
         }
 

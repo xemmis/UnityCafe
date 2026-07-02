@@ -12,7 +12,7 @@ namespace Core
         private void Awake()
         {
             InitializeSingleton();
-            Wallet.SetMoney(10000);
+            Wallet.AddMoney(10000);
         }
 
         public void RegisterPoint(WalkPoint walkPoint)

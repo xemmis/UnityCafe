@@ -23,7 +23,7 @@ namespace Core
             MoneyAmount -= cost;
         }
 
-        public static void SetMoney(int amount)
+        public static void AddMoney(int amount)
         {
             MoneyAmount += amount;
         }

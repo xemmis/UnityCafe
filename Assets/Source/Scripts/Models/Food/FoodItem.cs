@@ -10,7 +10,7 @@ namespace Models.Food
         [field: SerializeField] public List<FoodPrefer> FoodPrefers { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; } = null;
         [field: SerializeField] public string FoodName { get; private set; } = null;
-
+        [field: SerializeField] public int Cost { get; private set; } = 15;
 
         public void TakePrefers(List<FoodPrefer> prefers)
         {

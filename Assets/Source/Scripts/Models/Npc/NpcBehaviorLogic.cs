@@ -14,7 +14,8 @@ namespace Models.Npc
         [SerializeField] private ActionsSO _npcSO = null;
         [SerializeField] private bool _isEmploye = false;
         [SerializeField] private Image _emoteSprite = null;
-        [SerializeField] private EmoteContainer _container = null;
+
+        private EmoteContainer _container = null;
         private readonly Queue<IState> _stateQueue = new();
         private NavMeshAgent _agent;
         private Animator _animator;
@@ -82,13 +83,6 @@ namespace Models.Npc
             _visualizer.SetEmote(type);
             _visualizer.ClearAfterDelay(duration);
         }
-
-        public void SetWish(Sprite sprite)
-        {
-            _visualizer.SetSprite(sprite);
-        }
-
-        private void ClearEmote() => _visualizer.ClearEmote();
 
         public void ChangeState(IState newState)
         {

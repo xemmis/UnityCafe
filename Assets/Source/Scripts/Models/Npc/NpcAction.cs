@@ -1,5 +1,6 @@
 using Core.Dialogue;
 using Models.Food;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Models.Npc
@@ -11,8 +12,10 @@ namespace Models.Npc
         [field: SerializeField] public StateType StateType { get; private set; }
         [field: SerializeField] public WalkType WalkType { get; private set; }
         [field: SerializeField] public FoodRecipe FoodRecipe { get; private set; }
+        [field: SerializeField] public List<FoodPrefer> FoodPrefers { get; private set; } = new();
         [field: SerializeField] public int IntData { get; private set; }
     }
+
 
     public enum FoodPrefer
     {

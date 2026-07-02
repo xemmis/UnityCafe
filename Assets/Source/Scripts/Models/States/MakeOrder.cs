@@ -14,7 +14,6 @@ namespace Models.States
         public override void Enter(NpcBehaviorLogic controller)
         {
             base.Enter(controller);
-            controller.SetWish(controller.CurrentAction.FoodRecipe.FoodOutput.Icon);
         }
 
         public override void Update(NpcBehaviorLogic controller)
