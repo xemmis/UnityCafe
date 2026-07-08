@@ -86,7 +86,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7605009923466122419, guid: e81b02b797585e54b84905df0454d01d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -135,7 +135,6 @@ MonoBehaviour:
   _npcSO: {fileID: 11400000, guid: 79b42d0ce9ba05043b789475465d03eb, type: 2}
   _isEmploye: 0
   _emoteSprite: {fileID: 5380331624571212535}
-  _container: {fileID: 0}
 --- !u!114 &-3963471850930491527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Models.Npc.NpcInteraction
   _npcIcon: {fileID: -7605009923466122419, guid: e81b02b797585e54b84905df0454d01d, type: 3}
   _currentMood: 0
+  _container: {fileID: 0}
 --- !u!1 &4422573074850519853
 GameObject:
   m_ObjectHideFlags: 0

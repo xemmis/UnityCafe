@@ -1,3 +1,4 @@
+using Core.Dialogue;
 using Models.Npc;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,8 +16,12 @@ namespace Core
         [SerializeField] private int _maxActiveNpcs = 5;
         [SerializeField] private ActionsSO _actionsSo = null;
 
+        [Header("Quests")]
+        [SerializeField, Range(0f, 1f)] private float _questChance = 0.3f;
+
         private readonly Dictionary<NpcData, ObjectPool<NpcBehaviorLogic>> _pools = new();
         private readonly Dictionary<NpcBehaviorLogic, NpcData> _activeNpcs = new();
+        private readonly Dictionary<NpcBehaviorLogic, QuestContainer> _activeQuests = new();
         private List<NpcData> _validDatas = new();
         private Coroutine _spawnRoutine;
 
@@ -51,7 +56,7 @@ namespace Core
 
                 var pool = new ObjectPool<NpcBehaviorLogic>(logic, _initialPoolSize, _maxPoolSize, transform);
                 _pools[npcData] = pool;
-                _validDatas.Add(npcData); // только те, для кого пул создан
+                _validDatas.Add(npcData);
             }
         }
 
@@ -75,19 +80,46 @@ namespace Core
                 if (_activeNpcs.Count >= _maxActiveNpcs) continue;
 
                 NpcData randomData = _validDatas[Random.Range(0, _validDatas.Count)];
-                NpcBehaviorLogic npc = Spawn(randomData);
+
+                // решаем, дать ли квест, ДО спавна, чтобы сразу передать в Initialize
+                QuestContainer quest = RollQuest();
+
+                NpcBehaviorLogic npc = Spawn(randomData, quest);
 
                 if (npc != null)
                 {
                     _activeNpcs.Add(npc, randomData);
                     npc.OnDespawn += HandleNpcDespawn;
+
+                    if (quest != null)
+                        _activeQuests.Add(npc, quest);
+                }
+                else
+                {
+                    // спавн не удался — освобождаем взятый квест, иначе он "зависнет" занятым навсегда
+                    if (quest != null)
+                        QuestSystem.Instance?.ReleaseQuest(quest);
                 }
             }
+        }
+
+        private QuestContainer RollQuest()
+        {
+            if (QuestSystem.Instance == null) return null;
+            if (Random.value > _questChance) return null;
+
+            return QuestSystem.Instance.GetFreeQuest();
         }
 
         private void HandleNpcDespawn(NpcBehaviorLogic npc)
         {
             npc.OnDespawn -= HandleNpcDespawn;
+
+            if (_activeQuests.TryGetValue(npc, out QuestContainer quest))
+            {
+                _activeQuests.Remove(npc);
+                QuestSystem.Instance?.ReleaseQuest(quest);
+            }
 
             if (_activeNpcs.TryGetValue(npc, out NpcData data))
             {
@@ -96,7 +128,7 @@ namespace Core
             }
         }
 
-        public NpcBehaviorLogic Spawn(NpcData npcData)
+        public NpcBehaviorLogic Spawn(NpcData npcData, QuestContainer questContainer = null)
         {
             if (!_pools.TryGetValue(npcData, out ObjectPool<NpcBehaviorLogic> pool))
             {
@@ -105,7 +137,7 @@ namespace Core
             }
 
             NpcBehaviorLogic npc = pool.Get();
-            npc.Initialize(_actionsSo, npcData.Emotes);
+            npc.Initialize(_actionsSo, npcData.Emotes, questContainer);
             return npc;
         }
 
@@ -133,6 +165,7 @@ namespace Core
 
             _pools.Clear();
             _activeNpcs.Clear();
+            _activeQuests.Clear();
             _validDatas.Clear();
         }
     }

@@ -1,5 +1,6 @@
 namespace Core
 {
+    using NUnit.Framework;
     using System;
     using UnityEngine;
 

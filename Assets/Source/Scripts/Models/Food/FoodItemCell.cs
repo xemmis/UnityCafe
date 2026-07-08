@@ -123,7 +123,7 @@ namespace Models.Food
             // Ищем NPC через Physics2D overlap
             Collider2D hit = Physics2D.OverlapPoint(worldPos);
             NpcInteraction targetNpc = hit?.GetComponent<NpcInteraction>();
-
+            
             // UI ячейки ищем как раньше через RaycastAll
             FoodItemCell targetCell = null;
             if (targetNpc == null)

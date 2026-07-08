@@ -129,11 +129,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1665143077495855742, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6508627
+      value: 5.96
       objectReference: {fileID: 0}
     - target: {fileID: 1665143077495855742, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.187
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 1665143077495855742, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2110613068325522175, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _npcSO
@@ -8546,7 +8546,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.6875
+  orthographic size: 6.09375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8676,7 +8676,7 @@ MonoBehaviour:
   m_RefResolutionX: 640
   m_RefResolutionY: 360
   m_CropFrame: 0
-  m_GridSnapping: 2
+  m_GridSnapping: 1
   m_FilterMode: 0
   m_UpscaleRT: 0
   m_PixelSnapping: 0

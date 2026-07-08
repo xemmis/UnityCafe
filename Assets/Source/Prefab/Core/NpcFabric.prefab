@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7527015341095371162}
   - component: {fileID: 8485236168772950844}
   - component: {fileID: 8641909037914738885}
+  - component: {fileID: 3805764626501146820}
   m_Layer: 0
   m_Name: NpcFabric
   m_TagString: Untagged
@@ -55,7 +56,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2996d045812655e49b6f90dc4f49d12e, type: 2}
   _initialPoolSize: 5
   _maxPoolSize: 20
+  _spawnTick: {x: 5, y: 15}
+  _maxActiveNpcs: 5
   _actionsSo: {fileID: 11400000, guid: 79b42d0ce9ba05043b789475465d03eb, type: 2}
+  _questChance: 0.3
 --- !u!114 &8641909037914738885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,3 +72,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24674c88bcd1694db16d67907be84fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.WalkManager
+--- !u!114 &3805764626501146820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794862997456764247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04384840b6eda7440bef92e9b2ff03f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.Dialogue.QuestSystem
+  _quests:
+  - {fileID: 11400000, guid: 3a09f779e67134442829706d208638f9, type: 2}
