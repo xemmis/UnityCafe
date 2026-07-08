@@ -1,4 +1,3 @@
-
 namespace Models.Npc
 {
     using Core;
@@ -11,10 +10,13 @@ namespace Models.Npc
     [RequireComponent(typeof(NpcBehaviorLogic))]
     public sealed class NpcInteraction : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private Sprite _npcIcon;
+        [SerializeField] private Sprite _npcIcon = null;
         [SerializeField] private DialogueMood _currentMood = DialogueMood.Good;
+        [SerializeField] private QuestContainer _container = null;
+
         private List<FoodPrefer> _prefers = new();
-        private NpcBehaviorLogic _logic;
+        private NpcBehaviorLogic _logic = null;
+        private int _questProgress = 0;
         public bool IsWaitingFood { get; private set; } = false;
 
         private void Awake()
@@ -22,14 +24,34 @@ namespace Models.Npc
             _logic = GetComponent<NpcBehaviorLogic>();
         }
 
+        public void AddProgress()
+        {
+            _questProgress++;
+        }
+        public void ClearProgress()
+        {
+            _questProgress = 0;
+        }
+
         public void SetWaitCondition(bool condition)
         {
             IsWaitingFood = condition;
         }
 
+        public void Initialize(QuestContainer questContainer)
+        {
+            _container = questContainer;
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
             NpcAction currentAction = _logic.CurrentAction;
+
+            if (_container != null && currentAction?.StateType == _container.RequiredState)
+            {
+                DialogueSystem.Instance.StartDialogue(_container.Data.GetDialogueForProgress(_questProgress));
+                return;
+            }
 
             if (currentAction?.Dialogue == null)
                 DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);

@@ -1,3 +1,4 @@
+using Models.Npc;
 using UnityEngine;
 namespace Core.Dialogue
 {
@@ -5,6 +6,6 @@ namespace Core.Dialogue
     public sealed class QuestContainer : ScriptableObject
     {
         [field: SerializeField] public QuestData Data { get; private set; } = null;
-
+        [field: SerializeField] public StateType RequiredState { get; private set; } = StateType.Quest;
     }
 }

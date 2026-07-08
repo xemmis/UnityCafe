@@ -21,10 +21,11 @@ namespace Core
                     Debug.Log("Vibing not realizet yet");
                     break;
                 case StateType.Leave:
-                    Debug.Log("Leave not realizet yet");
-                    break;
+                    return new ExitState();
                 case StateType.Cook:
                     return new MakeFood(action.FoodRecipe);
+                case StateType.Quest:
+                    return new QuestState();
                 default:
                     Debug.Log("State Is not Assigned To Fabric");
                     return null;

@@ -1,6 +1,7 @@
 namespace Models.Npc
 {
     using Core;
+    using Core.Dialogue;
     using Models.Food;
     using Models.States;
     using Specs;
@@ -21,19 +22,20 @@ namespace Models.Npc
         private Animator _animator;
         private IState _currentState;
         private bool _isWorking;
-
         public bool IsWorking => _isWorking;
         public event System.Action<NpcBehaviorLogic> OnDespawn;
         public NpcAction CurrentAction { get; private set; }
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
 
-        private NpcVisualizer _visualizer;
+        private NpcVisualizer _visualizer = null;
+        private NpcInteraction _interaction = null;
 
         private void Awake()
         {
             TryGetComponent(out _agent);
             TryGetComponent(out _animator);
+            TryGetComponent(out _interaction);
             _visualizer = new NpcVisualizer(_emoteSprite, this);
         }
 
@@ -43,12 +45,13 @@ namespace Models.Npc
                 EmployeeManager.RegisterEmployee(this);
         }
 
-        public void Initialize(ActionsSO npcSO, EmoteContainer emoteContainer = null)
+        public void Initialize(ActionsSO npcSO, EmoteContainer emoteContainer = null, QuestContainer questContainer = null)
         {
             _npcSO = npcSO;
             _container = emoteContainer;
-            _visualizer.Initialize(emoteContainer);
+            if (_interaction != null && questContainer != null) _interaction.Initialize(questContainer);
 
+            _visualizer.Initialize(emoteContainer);
             int rand = Random.Range(0, npcSO.Actions.Count);
             InitializeActions(npcSO.Actions[rand].Actions);
         }
@@ -106,6 +109,14 @@ namespace Models.Npc
         // В ApplyState когда доходит до ExitState:
         private void ApplyState(IState newState)
         {
+            if (_currentState is QuestState)
+            {
+                if ((_currentState as QuestState).IsFinished)
+                {
+                    _interaction.AddProgress();
+                }
+            }
+
             _currentState?.Exit(this);
             _currentState = newState;
             _currentState?.Enter(this);

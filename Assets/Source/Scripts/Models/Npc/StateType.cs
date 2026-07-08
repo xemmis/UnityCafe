@@ -7,6 +7,8 @@ namespace Models.Npc
         MakeOrder,
         Vibing,
         Leave,
-        Cook
+        Cook,
+        Quest
+            
     }
 }
