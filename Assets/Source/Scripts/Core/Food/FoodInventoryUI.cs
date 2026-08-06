@@ -20,6 +20,13 @@ namespace Core.Food
         private void Start()
         {
             BakeryInventory.OnFoodInventoryChange += OnFoodChanged;
+            GameTimeManager.Instance.OnDayConditionChange.AddListener(HandleEndDayVisual);
+        }
+
+        private void HandleEndDayVisual(bool condition)
+        {
+            if (!condition && _openFlag)
+                Visualize();
         }
 
         public void Visualize()
@@ -43,6 +50,7 @@ namespace Core.Food
         private void OnDestroy()
         {
             BakeryInventory.OnFoodInventoryChange -= OnFoodChanged;
+            GameTimeManager.Instance.OnDayConditionChange.RemoveListener(HandleEndDayVisual);
         }
 
         private void OnFoodChanged(FoodItem _, int __) => Refresh();

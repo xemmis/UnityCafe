@@ -32,4 +32,9 @@ namespace Models.States
             base.Exit(controller);
         }
     }
+
+    public sealed class WaitOrderState : IdleState
+    {
+
+    }
 }

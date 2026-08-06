@@ -68,7 +68,9 @@ namespace Core
                 return;
             }
 
-            _spawnRoutine = StartCoroutine(SpawnRoutine());
+            GameTimeManager.Instance.OnDayConditionChange.AddListener(ChangeSpawnCondition);
+
+            ChangeSpawnCondition();
         }
 
         private IEnumerator SpawnRoutine()
@@ -152,6 +154,20 @@ namespace Core
             pool.Return(npc);
         }
 
+        public void StopSpawn()
+        {
+            StopCoroutine(_spawnRoutine);
+            _spawnRoutine = null;
+        }
+
+        public void ChangeSpawnCondition(bool condition = true)
+        {
+            if (condition)
+                _spawnRoutine = StartCoroutine(SpawnRoutine());
+            else
+                StopSpawn();
+        }
+
         private void OnDestroy()
         {
             if (_spawnRoutine != null)
@@ -163,6 +179,7 @@ namespace Core
             foreach (var pool in _pools.Values)
                 pool.Dispose();
 
+            GameTimeManager.Instance?.OnDayConditionChange.RemoveListener(ChangeSpawnCondition);
             _pools.Clear();
             _activeNpcs.Clear();
             _activeQuests.Clear();

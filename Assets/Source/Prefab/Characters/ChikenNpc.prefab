@@ -82,7 +82,7 @@ PrefabInstance:
       objectReference: {fileID: -2712638995507972316, guid: b122bfdacdd46b3499451ae316d37a9a, type: 3}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _isEmploye
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4983368468557759671, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _npcIcon

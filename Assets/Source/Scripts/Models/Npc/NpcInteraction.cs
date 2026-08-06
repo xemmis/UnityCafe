@@ -53,6 +53,17 @@ namespace Models.Npc
                 return;
             }
 
+            if (currentAction.StateType == StateType.MakeOrder)
+            {
+                _prefers.Clear();
+
+                _prefers.Add(FoodPrefer.Sweet);
+                _prefers.Add(FoodPrefer.Spicy);
+                SetWaitCondition(true);
+                //TODO Make random foodPrefer and DialogueTree for prefer (need SO container)
+            }
+
+
             if (currentAction?.Dialogue == null)
                 DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
             else

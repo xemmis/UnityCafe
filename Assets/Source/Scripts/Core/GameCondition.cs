@@ -10,7 +10,6 @@ namespace Core
         public static event Action<bool> OnCameraConditionChanged;
         public static event Action OnGamePaused;
         public static event Action OnGameResumed;
-
         public static bool IsBuildingModeEnabled { get; private set; }
         public static bool IsDragging { get; private set; }
         public static bool CameraControllEnabled { get; private set; }

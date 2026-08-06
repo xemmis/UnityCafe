@@ -8,7 +8,8 @@ namespace Models.Npc
         Vibing,
         Leave,
         Cook,
-        Quest
+        Quest,
+        WaitOrder
             
     }
 }

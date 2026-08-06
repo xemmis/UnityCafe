@@ -79,7 +79,6 @@ namespace Models.Npc
         {
             if (Random.Range(0f, 100f) > chance)
             {
-                print("Rett");
                 return;
             }
 

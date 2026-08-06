@@ -26,6 +26,8 @@ namespace Core
                     return new MakeFood(action.FoodRecipe);
                 case StateType.Quest:
                     return new QuestState();
+                case StateType.WaitOrder:
+                    return new WaitOrderState();
                 default:
                     Debug.Log("State Is not Assigned To Fabric");
                     return null;
