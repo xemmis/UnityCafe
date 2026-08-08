@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Bread
   m_EditorClassIdentifier: Assembly-CSharp::Core.NpcData
   <Prefab>k__BackingField: {fileID: 2110613068325522175, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
+  <Emotes>k__BackingField: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}

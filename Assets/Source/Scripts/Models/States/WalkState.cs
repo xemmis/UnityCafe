@@ -10,6 +10,7 @@ namespace Models.States
     {
         public WalkState(WalkPoint walkPoint)
         {
+            Debug.LogWarning(walkPoint == null);
             _point = walkPoint;
         }
 
@@ -26,16 +27,26 @@ namespace Models.States
         {
             _agent = controller.Agent;
             _animator = controller.Animator;
+
             if (_point == null)
             {
-                Debug.Log("Point == null");
+                controller.SetEmote(EmoteType.Dissapointed, 100);
+                controller.NextState();
                 return;
             }
+
+            controller.SetEmote(EmoteType.Happy);
+            if (_point.Type != WalkType.Leave)
+                _point.Reserve();
+
             _agent.SetDestination(_point.transform.position);
         }
 
         public void Exit(NpcBehaviorLogic controller)
         {
+            if (_point != null && _point.Type != WalkType.Leave)
+                _point.CancelReservation();
+
             _point = null;
             _agent = null;
             _animator = null;

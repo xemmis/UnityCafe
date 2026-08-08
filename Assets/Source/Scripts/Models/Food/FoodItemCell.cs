@@ -1,5 +1,5 @@
+using Core;
 using DG.Tweening;
-using Models.Food;
 using Models.Npc;
 using Specs;
 using System.Collections.Generic;
@@ -71,7 +71,7 @@ namespace Models.Food
         {
             if (IsEmpty || _currentFood == null)
                 return;
-
+            GameCondition.ChangeCameraControllCondition(false);
             _dragSourceCell = this;
 
             // Create global drag icon
@@ -115,15 +115,15 @@ namespace Models.Food
         {
             if (_dragIcon == null || !_dragIcon.gameObject.activeSelf || _dragSourceCell == null)
                 return;
+            GameCondition.ChangeCameraControllCondition(true);
 
-            // Конвертируем позицию пальца в мировые координаты
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(eventData.position);
             worldPos.z = 0f;
 
             // Ищем NPC через Physics2D overlap
             Collider2D hit = Physics2D.OverlapPoint(worldPos);
-            NpcBehaviorLogic targetNpc = hit?.GetComponent<NpcBehaviorLogic>();
-
+            NpcInteraction targetNpc = hit?.GetComponent<NpcInteraction>();
+            
             // UI ячейки ищем как раньше через RaycastAll
             FoodItemCell targetCell = null;
             if (targetNpc == null)
@@ -142,10 +142,7 @@ namespace Models.Food
                 }
             }
 
-            // дальше твоя логика if (targetNpc != null) / else if (targetCell != null) / else
-
-
-            if (targetNpc != null && targetNpc.CurrentAction.FoodRecipe?.FoodOutput == _currentFood)
+            if (targetNpc != null && targetNpc.IsWaitingFood)
             {
                 // Конвертируем мировую позицию NPC в позицию на Canvas
                 Vector2 screenPos = Camera.main.WorldToScreenPoint(targetNpc.transform.position);
@@ -229,10 +226,11 @@ namespace Models.Food
         }
 
         // Метод для обработки дропа на NPC - здесь будет ваша логика
-        protected virtual void HandleDropOnNpc(NpcBehaviorLogic npc, FoodItem food)
+        protected virtual void HandleDropOnNpc(NpcInteraction npc, FoodItem food)
         {
             // Базовая заглушка - вы переопределите этот метод или замените логикой
             Debug.Log($"Dropped {food.FoodName} on {npc.name}");
+            npc.AcceptFood(food);
             // npc.ReceiveFood(food); // пример вызова
         }
 

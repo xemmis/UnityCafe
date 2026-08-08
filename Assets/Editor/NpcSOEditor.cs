@@ -1,8 +1,9 @@
 #if UNITY_EDITOR
+using Models.Food;
+using Models.Npc;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using Models;
-using Models.Npc;
 
 [CustomEditor(typeof(ActionsSO))]
 public sealed class NpcSOEditor : Editor
@@ -58,9 +59,7 @@ public sealed class NpcSOEditor : Editor
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.Space(4);
-
         DrawActionGroups(actionsList);
-
         EditorGUILayout.Space(6);
 
         if (GUILayout.Button("＋  Add Actions Group", GUILayout.Height(30)))
@@ -127,8 +126,9 @@ public sealed class NpcSOEditor : Editor
             SerializedProperty dialogue = action.FindPropertyRelative("<Dialogue>k__BackingField");
             SerializedProperty stateType = action.FindPropertyRelative("<StateType>k__BackingField");
             SerializedProperty walkType = action.FindPropertyRelative("<WalkType>k__BackingField");
-            SerializedProperty foodRecipe = action.FindPropertyRelative("<FoodRecipe>k__BackingField");
+            SerializedProperty foodPrefers = action.FindPropertyRelative("<FoodPrefers>k__BackingField");
             SerializedProperty intData = action.FindPropertyRelative("<IntData>k__BackingField");
+            SerializedProperty foodRecipe = action.FindPropertyRelative("<FoodRecipe>k__BackingField");
 
             EditorGUILayout.BeginVertical(_actionBoxStyle);
 
@@ -157,32 +157,60 @@ public sealed class NpcSOEditor : Editor
 
             EditorGUI.indentLevel++;
 
-            // Dialogue — всегда
             EditorGUILayout.PropertyField(dialogue, new GUIContent("Dialogue Tree"));
-
-            // StateType — всегда
             EditorGUILayout.PropertyField(stateType, new GUIContent("State"));
 
             StateType currentState = (StateType)stateType.enumValueIndex;
 
-            // IntData — теперь всегда
             EditorGUILayout.PropertyField(intData, new GUIContent("Int Data"));
 
-            // WalkType — только при Walk
             if (currentState == StateType.Walk)
             {
                 EditorGUILayout.PropertyField(walkType, new GUIContent("Walk Type"));
             }
 
-            // FoodRecipe — только при MakeOrder
+
             if (currentState == StateType.MakeOrder)
             {
                 EditorGUILayout.PropertyField(foodRecipe, new GUIContent("Food Recipe"));
+                DrawFoodPrefers(foodPrefers);
             }
 
             EditorGUI.indentLevel--;
             EditorGUILayout.EndVertical();
         }
+    }
+
+    private void DrawFoodPrefers(SerializedProperty foodPrefers)
+    {
+        EditorGUILayout.LabelField("Food Prefers", EditorStyles.boldLabel);
+        EditorGUI.indentLevel++;
+
+        string[] enumNames = System.Enum.GetNames(typeof(FoodPrefer));
+        int currentMask = 0;
+
+        for (int i = 0; i < foodPrefers.arraySize; i++)
+        {
+            int enumIndex = foodPrefers.GetArrayElementAtIndex(i).enumValueIndex;
+            currentMask |= (1 << enumIndex);
+        }
+
+        int newMask = EditorGUILayout.MaskField("Prefers", currentMask, enumNames);
+
+        if (newMask != currentMask)
+        {
+            foodPrefers.ClearArray();
+            for (int i = 0; i < enumNames.Length; i++)
+            {
+                if ((newMask & (1 << i)) != 0)
+                {
+                    foodPrefers.InsertArrayElementAtIndex(foodPrefers.arraySize);
+                    foodPrefers.GetArrayElementAtIndex(foodPrefers.arraySize - 1).enumValueIndex = i;
+                }
+            }
+        }
+
+        EditorGUI.indentLevel--;
     }
 
     private static Texture2D MakeTex(int w, int h, Color col)

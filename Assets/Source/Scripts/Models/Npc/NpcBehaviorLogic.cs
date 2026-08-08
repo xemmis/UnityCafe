@@ -1,77 +1,62 @@
-using Core.Dialogue;
-using Core;
-using Specs;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.AI;
-using Models.States;
-
 namespace Models.Npc
 {
-    public sealed class NpcBehaviorLogic : MonoBehaviour, IPointerClickHandler
+    using Core;
+    using Core.Dialogue;
+    using Models.Food;
+    using Models.States;
+    using Specs;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.AI;
+    using UnityEngine.UI;
+
+    public sealed class NpcBehaviorLogic : MonoBehaviour
     {
-        [SerializeField] private Sprite _npcIcon = null;
-        [SerializeField] private bool _isEmploye = false;
-        [SerializeField] private NpcAction _currentAction = null;
         [SerializeField] private ActionsSO _npcSO = null;
+        [SerializeField] private bool _isEmploye = false;
+        [SerializeField] private Image _emoteSprite = null;
+
+        private EmoteContainer _container = null;
         private readonly Queue<IState> _stateQueue = new();
-        private NavMeshAgent _agent = null;
-        private Animator _animator = null;
-        private IState _currentState = null;
-        private DialogueMood _currentMood;
-        private bool _isWorking = false;
+        private NavMeshAgent _agent;
+        private Animator _animator;
+        private IState _currentState;
+        private bool _isWorking;
         public bool IsWorking => _isWorking;
-        public NpcAction CurrentAction => _currentAction;
+        public event System.Action<NpcBehaviorLogic> OnDespawn;
+        public NpcAction CurrentAction { get; private set; }
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
 
+        private NpcVisualizer _visualizer = null;
+        private NpcInteraction _interaction = null;
+
         private void Awake()
         {
-            SetRandomMood();
-
-            InitializeComponents();
+            TryGetComponent(out _agent);
+            TryGetComponent(out _animator);
+            TryGetComponent(out _interaction);
+            _visualizer = new NpcVisualizer(_emoteSprite, this);
         }
 
         private void Start()
         {
             if (_isEmploye)
                 EmployeeManager.RegisterEmployee(this);
-
-            ApplyState(new WalkState(WalkManager.Instance.GetFirstFreeWalkPoint(WalkType.Table)));
         }
 
-        public void SetWorkState(bool condition)
-        {
-            _isWorking = condition;
-        }
-
-        private void InitializeComponents()
-        {
-            TryGetComponent<NavMeshAgent>(out _agent);
-            TryGetComponent<Animator>(out _animator);
-        }
-
-        private void SetRandomMood()
-        {
-            var moods = (DialogueMood[])System.Enum.GetValues(typeof(DialogueMood));
-
-            _currentMood = moods[Random.Range(0, moods.Length)];
-        }
-
-        public void Initialize(ActionsSO npcSO)
+        public void Initialize(ActionsSO npcSO, EmoteContainer emoteContainer = null, QuestContainer questContainer = null)
         {
             _npcSO = npcSO;
-            int rand = Random.Range(0, npcSO.Actions.Count - 1);
+            _container = emoteContainer;
+            if (_interaction != null && questContainer != null) _interaction.Initialize(questContainer);
 
-            foreach (NpcAction npcAction in npcSO.Actions[rand].Actions)
-            {
-                IState state = NpcStateFabric.CreateState(npcAction);
-                _stateQueue.Enqueue(state);
-            }
+            _visualizer.Initialize(emoteContainer);
+            int rand = Random.Range(0, npcSO.Actions.Count);
+            InitializeActions(npcSO.Actions[rand].Actions);
         }
 
-        public void Initialize(List<NpcAction> actions)
+        private void InitializeActions(List<NpcAction> actions)
         {
             foreach (NpcAction npcAction in actions)
             {
@@ -79,6 +64,26 @@ namespace Models.Npc
                 _stateQueue.Enqueue(state);
             }
             NextState();
+        }
+
+        public void SetWorkState(bool condition, FoodRecipe recipe = null)
+        {
+            _isWorking = condition;
+
+            if (recipe == null) return;
+
+            InitializeActions(recipe.NpcActions);
+        }
+
+        public void SetEmote(EmoteType type, float chance = 45f, float duration = 5f)
+        {
+            if (Random.Range(0f, 100f) > chance)
+            {
+                return;
+            }
+
+            _visualizer.SetEmote(type);
+            _visualizer.ClearAfterDelay(duration);
         }
 
         public void ChangeState(IState newState)
@@ -94,33 +99,36 @@ namespace Models.Npc
                 ApplyState(_stateQueue.Dequeue());
                 return;
             }
+
             _isWorking = false;
             ApplyState(_isEmploye ? new IdleState() : new ExitState());
         }
 
+
+        // В ApplyState когда доходит до ExitState:
         private void ApplyState(IState newState)
         {
+            if (_currentState is QuestState)
+            {
+                if ((_currentState as QuestState).IsFinished)
+                {
+                    _interaction.AddProgress();
+                }
+            }
+
             _currentState?.Exit(this);
             _currentState = newState;
-            print(newState.GetType());
             _currentState?.Enter(this);
         }
 
-        public void FixedUpdate()
+        public void ReturnToPool()
         {
-            _currentState?.Update(this);
+            OnDespawn?.Invoke(this);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        private void FixedUpdate()
         {
-            if (_currentAction.Dialogue == null)
-            {
-                DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
-            }
-            else
-            {
-                DialogueSystem.Instance.StartDialogue(_currentAction.Dialogue, _npcIcon);
-            }
+            _currentState?.Update(this);
         }
     }
 }

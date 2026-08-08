@@ -22,14 +22,13 @@ namespace Models.States
 
         public void Enter(NpcBehaviorLogic controller)
         {
-
+            controller.SetEmote(EmoteType.Work);
         }
 
         public void Exit(NpcBehaviorLogic controller)
         {
             BakeryInventory.Add(_recipe.FoodOutput);
             _recipe = null;
-            Debug.Log("EndWork");
         }
 
         public void Update(NpcBehaviorLogic controller)
