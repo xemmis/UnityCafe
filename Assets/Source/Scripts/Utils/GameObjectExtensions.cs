@@ -29,4 +29,12 @@ namespace Utils
             return result != null;
         }
     }
+
+
+
+    public static class ColorExtensions
+    {
+        public static Color Transparent = new Color(1f,1f, 1f, 0f);
+        public static Color Visible = new Color(1f, 1f, 1f, 1f);
+    }
 }

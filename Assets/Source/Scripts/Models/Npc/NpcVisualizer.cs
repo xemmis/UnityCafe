@@ -63,7 +63,7 @@ namespace Models.Npc
         {
             if (_wishImage == null) return;
             StopDismiss();
-            _wishImage.color = ColorExtensions.Visible();
+            _wishImage.color = ColorExtensions.Visible;
             _wishImage.sprite = sprite;
             PlayPopIn();
         }
@@ -85,7 +85,7 @@ namespace Models.Npc
 
             StopDismiss();
             _wishImage.sprite = sprite;
-            _wishImage.color = ColorExtensions.Visible();
+            _wishImage.color = ColorExtensions.Visible;
             PlayPopIn();
         }
 

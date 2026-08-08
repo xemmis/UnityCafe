@@ -27,9 +27,10 @@ namespace Models.Npc
         public NpcAction CurrentAction { get; private set; }
         public NavMeshAgent Agent => _agent;
         public Animator Animator => _animator;
-
         private NpcVisualizer _visualizer = null;
         private NpcInteraction _interaction = null;
+        public IState CurrentState => _currentState;
+        public NpcInteraction Interaction => _interaction;
 
         private void Awake()
         {
@@ -56,7 +57,7 @@ namespace Models.Npc
             InitializeActions(npcSO.Actions[rand].Actions);
         }
 
-        private void InitializeActions(List<NpcAction> actions)
+        public void InitializeActions(List<NpcAction> actions)
         {
             foreach (NpcAction npcAction in actions)
             {

@@ -3,6 +3,7 @@ namespace Models.Npc
     using Core;
     using Core.Dialogue;
     using Models.Food;
+    using Models.States;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.EventSystems;
@@ -15,6 +16,7 @@ namespace Models.Npc
         [SerializeField] private QuestContainer _container = null;
 
         private List<FoodPrefer> _prefers = new();
+        private DialogueTree _orderHint = null;
         private NpcBehaviorLogic _logic = null;
         private int _questProgress = 0;
         public bool IsWaitingFood { get; private set; } = false;
@@ -24,19 +26,9 @@ namespace Models.Npc
             _logic = GetComponent<NpcBehaviorLogic>();
         }
 
-        public void AddProgress()
-        {
-            _questProgress++;
-        }
-        public void ClearProgress()
-        {
-            _questProgress = 0;
-        }
-
-        public void SetWaitCondition(bool condition)
-        {
-            IsWaitingFood = condition;
-        }
+        public void AddProgress() => _questProgress++;
+        public void ClearProgress() => _questProgress = 0;
+        public void SetWaitCondition(bool condition) => IsWaitingFood = condition;
 
         public void Initialize(QuestContainer questContainer)
         {
@@ -45,61 +37,73 @@ namespace Models.Npc
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            NpcAction currentAction = _logic.CurrentAction;
-
-            if (_container != null && currentAction?.StateType == _container.RequiredState)
+            if (_container != null && _logic.CurrentState is QuestState)
             {
                 DialogueSystem.Instance.StartDialogue(_container.Data.GetDialogueForProgress(_questProgress));
                 return;
             }
 
-            if (currentAction.StateType == StateType.MakeOrder)
+            if (_logic.CurrentState is MakeOrder)
             {
-                _prefers.Clear();
-
-                _prefers.Add(FoodPrefer.Sweet);
-                _prefers.Add(FoodPrefer.Spicy);
-                SetWaitCondition(true);
-                //TODO Make random foodPrefer and DialogueTree for prefer (need SO container)
+                _logic.ChangeState(new WaitOrderState());
+                return;
             }
 
+            if (_logic.CurrentState is WaitOrderState)
+            {
+                if (_orderHint != null)
+                    DialogueSystem.Instance.StartDialogue(_orderHint, _npcIcon);
+                return;
+            }
 
-            if (currentAction?.Dialogue == null)
-                DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
-            else
-                DialogueSystem.Instance.StartDialogue(currentAction.Dialogue, _npcIcon);
+            DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
+        }
+
+        // Вызывается из WaitOrderState.Enter при переходе в состояние ожидания заказа
+        public void AssignRandomOrder()
+        {
+            var (prefer, hint) = OrderFactory.Instance.CreateRandomOrder();
+
+            _prefers.Clear();
+            _prefers.Add(prefer);
+            _orderHint = hint;
+
+            SetWaitCondition(true);
+
+            if (hint != null)
+                DialogueSystem.Instance.StartDialogue(hint, _npcIcon);
         }
 
         public void AcceptFood(FoodItem foodItem)
         {
-            if (!IsWaitingFood) return;
+            if (!IsWaitingFood || foodItem == null) return;
 
             int accurancy = 0;
 
-            foreach (FoodPrefer prefer in foodItem.FoodPrefers)
+            if (foodItem.FoodPrefers != null)
             {
-                if (_prefers.Contains(prefer)) accurancy++;
+                foreach (FoodPrefer prefer in foodItem.FoodPrefers)
+                    if (_prefers.Contains(prefer)) accurancy++;
             }
 
             if (accurancy <= 0)
             {
-                _logic.SetEmote(Core.EmoteType.Sad, 100);
+                _logic.SetEmote(EmoteType.Sad, 100);
                 Wallet.AddMoney(foodItem.Cost / 2);
             }
-
-            else if (accurancy == _prefers.Count)
+            else if (accurancy >= _prefers.Count)
             {
                 _logic.SetEmote(EmoteType.Happy, 100);
                 Wallet.AddMoney(foodItem.Cost * 2);
             }
-
             else
             {
                 Wallet.AddMoney(foodItem.Cost);
             }
 
-            _logic.NextState();
             IsWaitingFood = false;
+            _orderHint = null;
+            _logic.NextState();
         }
     }
 }

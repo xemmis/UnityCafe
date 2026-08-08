@@ -24,8 +24,9 @@ namespace Core
                     continue;
                 }
                 npc.SetWorkState(true);
-                npc.Initialize(Recipe.NpcActions);
+                npc.InitializeActions(Recipe.NpcActions);
             }
         }
     }
 }
+ 

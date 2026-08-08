@@ -16,7 +16,7 @@ namespace Core
                 case StateType.Walk:
                     return new WalkState(action.WalkType);
                 case StateType.MakeOrder:
-                    return new MakeOrder();
+                    return new MakeOrder(action.IntData);
                 case StateType.Vibing:
                     Debug.Log("Vibing not realizet yet");
                     break;
