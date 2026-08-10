@@ -1,5 +1,8 @@
+using Models.Food;
+using Models.Npc;
 using System;
 using UnityEngine;
+
 namespace Core.Dialogue
 {
     [Serializable]
@@ -7,5 +10,7 @@ namespace Core.Dialogue
     {
         [field: SerializeField] public int ProgressStage { get; private set; }
         [field: SerializeField] public DialogueTree Dialogue { get; private set; }
+
+        [field: SerializeField] public FoodItem RequiredItem { get; private set; }
     }
 }

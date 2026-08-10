@@ -7,7 +7,6 @@ namespace Core.Dialogue
     {
         [SerializeField] private List<QuestContainer> _quests = new();
 
-        // ключ - квест, значение - занят он сейчас или нет
         private readonly Dictionary<QuestContainer, bool> _questDict = new();
 
         public static QuestSystem Instance { get; private set; } = null;
@@ -32,31 +31,28 @@ namespace Core.Dialogue
             foreach (QuestContainer quest in _quests)
             {
                 if (quest == null) continue;
-                _questDict[quest] = false; // false = свободен
+                _questDict[quest] = false;
             }
         }
 
         /// <summary>
-        /// Возвращает свободный квест и сразу помечает его занятым.
-        /// Если свободных нет - вернёт null.
+        /// Возвращает свободный квест, у которого ещё есть непройденная стадия.
+        /// Полностью пройденные квесты больше не выдаются.
         /// </summary>
         public QuestContainer GetFreeQuest()
         {
             foreach (var pair in _questDict)
             {
-                if (pair.Value == false)
-                {
-                    _questDict[pair.Key] = true;
-                    return pair.Key;
-                }
+                if (pair.Value) continue;                    // занят другим NPC
+                if (!pair.Key.Data.HasNextStage()) continue;  // квест пройден целиком
+
+                _questDict[pair.Key] = true;
+                return pair.Key;
             }
 
             return null;
         }
 
-        /// <summary>
-        /// Освободить квест (например, если нпс despawn-нулся, не завершив его).
-        /// </summary>
         public void ReleaseQuest(QuestContainer quest)
         {
             if (quest == null) return;
@@ -66,12 +62,13 @@ namespace Core.Dialogue
         }
 
         /// <summary>
-        /// Пометить квест как завершённый/навсегда занятым - если нужна такая логика.
+        /// Вызывается при успешной передаче нужного предмета NPC.
+        /// Продвигает квест на следующую стадию.
         /// </summary>
-        public void CompleteQuest(QuestContainer quest)
+        public void CompleteQuestStage(QuestContainer quest)
         {
-            // тут можешь добавить свою логику прогресса,
-            // например quest.Data.AdvanceProgress() и т.п.
+            if (quest == null) return;
+            quest.Data.AdvanceProgress();
         }
     }
 }

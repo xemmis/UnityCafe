@@ -16,4 +16,9 @@ MonoBehaviour:
     <QuestProgress>k__BackingField: 0
     <QuestDialogues>k__BackingField:
     - <ProgressStage>k__BackingField: 0
-      <Dialogue>k__BackingField: {fileID: 0}
+      <Dialogue>k__BackingField: {fileID: 11400000, guid: ed825fe4cf77fa640964f0c5d893ad28, type: 2}
+      <RequiredItem>k__BackingField: {fileID: 11400000, guid: aa48434a14cf1794fb08f88cd2c88ad0, type: 2}
+    - <ProgressStage>k__BackingField: 0
+      <Dialogue>k__BackingField: {fileID: 11400000, guid: ed825fe4cf77fa640964f0c5d893ad28, type: 2}
+      <RequiredItem>k__BackingField: {fileID: 11400000, guid: 1adba71a6b898af4783689f4348530d2, type: 2}
+  <RequiredState>k__BackingField: 6

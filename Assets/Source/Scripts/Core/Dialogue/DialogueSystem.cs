@@ -1,32 +1,31 @@
 using Specs;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 namespace Core.Dialogue
 {
     public sealed class DialogueSystem : MonoBehaviour
     {
         private int _dialogueIndex = -1;
+        private bool _isDialogueActive = false;
 
         private IDialogueVisualizer _visualizer = null;
         [SerializeField] private MoodDialogueEntry[] _moodEntries;
         private Dictionary<DialogueMood, DialogueTree[]> _moodTrees;
         private DialogueTree _currentTree = null;
-        private InputActionAsset _uiActionAsset = null;
-        private InputAction _clickAction = null;
 
         public static DialogueSystem Instance = null;
 
         private void Awake()
         {
             InitializeSingleton();
-            InitializeInput();
             BuildMoodDictionary();
 
             if (_visualizer == null)
-            {
                 _visualizer = GetComponentInChildren<IDialogueVisualizer>();
-            }
+
+            if (_visualizer == null)
+                Debug.LogError("[DialogueSystem] Не найден компонент IDialogueVisualizer среди дочерних объектов!", this);
         }
 
         private void BuildMoodDictionary()
@@ -36,25 +35,12 @@ namespace Core.Dialogue
                 _moodTrees[entry.Mood] = entry.Trees;
         }
 
-        private void InitializeInput()
-        {
-            if (_uiActionAsset == null)
-                return;
-
-            _clickAction = _uiActionAsset.FindAction("Click");
-        }
-
         private void InitializeSingleton()
         {
-            if (DialogueSystem.Instance == null)
-            {
-                DialogueSystem.Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            if (Instance == null) Instance = this;
+            else Destroy(gameObject);
         }
+
         public void StartDialogue(DialogueMood mood, Sprite sprite = null)
         {
             if (!_moodTrees.TryGetValue(mood, out DialogueTree[] trees) || trees.Length == 0)
@@ -63,26 +49,25 @@ namespace Core.Dialogue
                 return;
             }
 
-            DialogueTree tree = trees[UnityEngine.Random.Range(0, trees.Length)];
+            DialogueTree tree = trees[Random.Range(0, trees.Length)];
             StartDialogue(tree, sprite);
         }
 
         public void StartDialogue(DialogueTree dialogueTree, Sprite sprite = null)
         {
+            if (dialogueTree == null || _visualizer == null) return;
+
             _currentTree = dialogueTree;
             _dialogueIndex = 0;
-            _clickAction.performed += RegisterInput;
+            _isDialogueActive = true;
 
-            _visualizer.Visualize(_currentTree.GetNode(_dialogueIndex), sprite);
+            _visualizer.Open(_currentTree.GetNode(_dialogueIndex), sprite);
         }
 
-        public void RegisterInput(InputAction.CallbackContext context)
+        public void OnNextButtonPressed()
         {
-            NextNode();
-        }
+            if (!_isDialogueActive || _visualizer == null) return;
 
-        private void NextNode()
-        {
             if (_visualizer.IsRevealing())
             {
                 _visualizer.SkipReveal();
@@ -90,23 +75,23 @@ namespace Core.Dialogue
             }
 
             _dialogueIndex++;
-
             DialogueNode newNode = _currentTree?.GetNode(_dialogueIndex);
 
             if (newNode == null)
             {
                 EndDialogue();
+                return;
             }
 
-            _visualizer.Visualize(newNode);
+            _visualizer.ShowNode(newNode);
         }
 
         public void EndDialogue()
         {
+            _isDialogueActive = false;
             _currentTree = null;
             _dialogueIndex = 0;
-            _visualizer.ClearText();
-            _clickAction.performed -= RegisterInput;
+            _visualizer?.Close();
         }
     }
 }

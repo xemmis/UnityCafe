@@ -22,19 +22,4 @@ namespace Models.States
             }
         }
     }
-
-    public sealed class WaitOrderState : Specs.IState
-    {
-        public void Enter(NpcBehaviorLogic controller)
-        {
-            controller.Interaction?.AssignRandomOrder();
-        }
-
-        public void Exit(NpcBehaviorLogic controller) { }
-
-        public void Update(NpcBehaviorLogic controller)
-        {
-            // Ничего не делаем — ждём, пока AcceptFood не вызовет NextState()
-        }
-    }
 }

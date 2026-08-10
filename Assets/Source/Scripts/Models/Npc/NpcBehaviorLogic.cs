@@ -109,14 +109,6 @@ namespace Models.Npc
         // В ApplyState когда доходит до ExitState:
         private void ApplyState(IState newState)
         {
-            if (_currentState is QuestState)
-            {
-                if ((_currentState as QuestState).IsFinished)
-                {
-                    _interaction.AddProgress();
-                }
-            }
-
             _currentState?.Exit(this);
             _currentState = newState;
             _currentState?.Enter(this);

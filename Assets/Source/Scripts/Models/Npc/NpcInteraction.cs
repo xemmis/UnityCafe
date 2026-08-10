@@ -13,12 +13,14 @@ namespace Models.Npc
     {
         [SerializeField] private Sprite _npcIcon = null;
         [SerializeField] private DialogueMood _currentMood = DialogueMood.Good;
-        [SerializeField] private QuestContainer _container = null;
+
+        private QuestContainer _container = null;
+        private QuestDialoguePair? _activeQuestPair = null;
+        private bool _isQuestOrder = false;
 
         private List<FoodPrefer> _prefers = new();
         private DialogueTree _orderHint = null;
         private NpcBehaviorLogic _logic = null;
-        private int _questProgress = 0;
         public bool IsWaitingFood { get; private set; } = false;
 
         private void Awake()
@@ -26,8 +28,6 @@ namespace Models.Npc
             _logic = GetComponent<NpcBehaviorLogic>();
         }
 
-        public void AddProgress() => _questProgress++;
-        public void ClearProgress() => _questProgress = 0;
         public void SetWaitCondition(bool condition) => IsWaitingFood = condition;
 
         public void Initialize(QuestContainer questContainer)
@@ -37,12 +37,6 @@ namespace Models.Npc
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_container != null && _logic.CurrentState is QuestState)
-            {
-                DialogueSystem.Instance.StartDialogue(_container.Data.GetDialogueForProgress(_questProgress));
-                return;
-            }
-
             if (_logic.CurrentState is MakeOrder)
             {
                 _logic.ChangeState(new WaitOrderState());
@@ -51,22 +45,55 @@ namespace Models.Npc
 
             if (_logic.CurrentState is WaitOrderState)
             {
-                if (_orderHint != null)
-                    DialogueSystem.Instance.StartDialogue(_orderHint, _npcIcon);
+                DialogueTree hint = _isQuestOrder
+                    ? _activeQuestPair?.Dialogue
+                    : _orderHint;
+
+                if (hint != null)
+                    DialogueSystem.Instance.StartDialogue(hint, _npcIcon);
                 return;
             }
 
             DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
         }
 
-        // Вызывается из WaitOrderState.Enter при переходе в состояние ожидания заказа
-        public void AssignRandomOrder()
+        // Вызывается из WaitOrderState.Enter при переходе в состояние ожидания заказа.
+        // Решает, обычный это заказ или квестовый.
+        public void AssignOrder()
+        {
+            if (_container != null && _container.Data.HasNextStage())
+                AssignQuestOrder();
+            else
+                AssignRandomOrder();
+        }
+
+        private void AssignQuestOrder()
+        {
+            QuestDialoguePair? pair = _container.Data.GetCurrentPair();
+
+            if (!pair.HasValue)
+            {
+                AssignRandomOrder();
+                return;
+            }
+
+            _activeQuestPair = pair;
+            _isQuestOrder = true;
+
+            SetWaitCondition(true);
+
+            if (pair.Value.Dialogue != null)
+                DialogueSystem.Instance.StartDialogue(pair.Value.Dialogue, _npcIcon);
+        }
+
+        private void AssignRandomOrder()
         {
             var (prefer, hint) = OrderFactory.Instance.CreateRandomOrder();
 
             _prefers.Clear();
             _prefers.Add(prefer);
             _orderHint = hint;
+            _isQuestOrder = false;
 
             SetWaitCondition(true);
 
@@ -78,13 +105,44 @@ namespace Models.Npc
         {
             if (!IsWaitingFood || foodItem == null) return;
 
+            if (_isQuestOrder)
+                HandleQuestFood(foodItem);
+            else
+                HandleRegularFood(foodItem);
+
+            IsWaitingFood = false;
+            _orderHint = null;
+            _logic.NextState();
+        }
+
+        private void HandleQuestFood(FoodItem foodItem)
+        {
+            bool isCorrect = _activeQuestPair.HasValue
+                && _activeQuestPair.Value.RequiredItem == foodItem;
+
+            if (isCorrect)
+            {
+                _logic.SetEmote(EmoteType.Happy, 100);
+                Wallet.AddMoney(foodItem.Cost * 2);
+                QuestSystem.Instance?.CompleteQuestStage(_container);
+            }
+            else
+            {
+                _logic.SetEmote(EmoteType.Sad, 100);
+                Wallet.AddMoney(foodItem.Cost / 2);
+            }
+
+            _activeQuestPair = null;
+            _isQuestOrder = false;
+        }
+
+        private void HandleRegularFood(FoodItem foodItem)
+        {
             int accurancy = 0;
 
             if (foodItem.FoodPrefers != null)
-            {
                 foreach (FoodPrefer prefer in foodItem.FoodPrefers)
                     if (_prefers.Contains(prefer)) accurancy++;
-            }
 
             if (accurancy <= 0)
             {
@@ -100,10 +158,6 @@ namespace Models.Npc
             {
                 Wallet.AddMoney(foodItem.Cost);
             }
-
-            IsWaitingFood = false;
-            _orderHint = null;
-            _logic.NextState();
         }
     }
 }

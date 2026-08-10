@@ -8,10 +8,8 @@ namespace Core.Dialogue
         public List<DialogueNode> Nodes = new();
         public DialogueNode GetNode(int index)
         {
-            if (Nodes[index] == null)
-            {
+            if (index < 0 || index >= Nodes.Count)
                 return null;
-            }
 
             return Nodes[index];
         }

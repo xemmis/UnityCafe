@@ -1,7 +1,6 @@
 ﻿using Models.Food;
 using Models.Npc;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Core
 {
@@ -20,7 +19,6 @@ namespace Core
             {
                 if (npc.IsWorking)
                 {
-                    Debug.Log("Has");
                     continue;
                 }
                 npc.SetWorkState(true);

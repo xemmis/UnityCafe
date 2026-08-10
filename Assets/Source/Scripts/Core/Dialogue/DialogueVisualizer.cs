@@ -1,8 +1,10 @@
+using DG.Tweening;
 using Specs;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Core.Dialogue
 {
@@ -12,19 +14,39 @@ namespace Core.Dialogue
         [SerializeField] private TextMeshProUGUI _tmp = null;
         [SerializeField] private Image _icon = null;
 
+        [Header("Popup Movement")]
+        [SerializeField] private Transform _popup = null;
+        [SerializeField] private Transform _openPos = null;
+        [SerializeField] private Transform _closePos = null;
+        [SerializeField] private float _moveDuration = 0.5f;
+
         private DialogueNode _currentNode = null;
         private Coroutine _revealCoroutine = null;
         private bool _isRevealing = false;
+        private Tween _moveTween = null;
 
         private void Awake()
         {
             if (_tmp == null)
-            {
                 _tmp = GetComponentInChildren<TextMeshProUGUI>();
-            }
+
+            if (_icon == null)
+                _icon = GetComponentInChildren<Image>();
+
+            if (_popup == null)
+                Debug.LogError($"[DialogueVisualizer] _popup не назначен на {gameObject.name}!", this);
+
+            if (_openPos == null || _closePos == null)
+                Debug.LogError($"[DialogueVisualizer] _openPos/_closePos не назначены на {gameObject.name}!", this);
         }
 
-        public void Visualize(DialogueNode node, Sprite sprite = null)
+        public void Open(DialogueNode node, Sprite sprite = null)
+        {
+            MoveTo(_openPos);
+            ShowNode(node, sprite);
+        }
+
+        public void ShowNode(DialogueNode node, Sprite sprite = null)
         {
             _currentNode = node;
 
@@ -36,13 +58,27 @@ namespace Core.Dialogue
 
             StopRevealCoroutine();
 
-            if (sprite != null)
+            if (sprite != null && _icon != null)
             {
-                _icon.color = Color.black; 
+                _icon.color = ColorExtensions.Visible;
                 _icon.sprite = sprite;
             }
 
             _revealCoroutine = StartCoroutine(RevealText(_currentNode.NpcText));
+        }
+
+        public void Close()
+        {
+            ClearText();
+            MoveTo(_closePos);
+        }
+
+        private void MoveTo(Transform target)
+        {
+            if (_popup == null || target == null) return;
+
+            _moveTween?.Kill();
+            _moveTween = _popup.DOMove(target.position, _moveDuration).SetEase(Ease.OutQuad);
         }
 
         private IEnumerator RevealText(string fullText)
@@ -72,11 +108,12 @@ namespace Core.Dialogue
             }
         }
 
-        public void ClearText()
+        private void ClearText()
         {
             StopRevealCoroutine();
-            _icon.color = Color.clear; 
-            _tmp.text = "";
+            if (_icon != null) _icon.color = ColorExtensions.Transparent;
+            if (_tmp != null) _tmp.text = "";
+            _currentNode = null;
         }
 
         private void StopRevealCoroutine()
@@ -92,6 +129,7 @@ namespace Core.Dialogue
         private void OnDestroy()
         {
             StopRevealCoroutine();
+            _moveTween?.Kill();
         }
     }
 }

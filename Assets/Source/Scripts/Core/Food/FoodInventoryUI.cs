@@ -50,7 +50,7 @@ namespace Core.Food
         private void OnDestroy()
         {
             BakeryInventory.OnFoodInventoryChange -= OnFoodChanged;
-            GameTimeManager.Instance.OnDayConditionChange.RemoveListener(HandleEndDayVisual);
+            GameTimeManager.Instance?.OnDayConditionChange.RemoveListener(HandleEndDayVisual);
         }
 
         private void OnFoodChanged(FoodItem _, int __) => Refresh();

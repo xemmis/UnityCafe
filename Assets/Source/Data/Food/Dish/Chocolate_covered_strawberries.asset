@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa9caf770e3bd14a93ce197b6e55f36, type: 3}
   m_Name: Chocolate_covered_strawberries
   m_EditorClassIdentifier: Assembly-CSharp::Models.Food.FoodItem
-  <FoodPrefers>k__BackingField: 010000000200000005000000
+  <FoodPrefers>k__BackingField: 0100000002000000
   <Icon>k__BackingField: {fileID: 8354765169567608462, guid: f58d8a31e61e3684e88e26a1b2074efa, type: 3}
   <FoodName>k__BackingField: Chocolate_covered_strawberries
+  <Cost>k__BackingField: 15

@@ -21,7 +21,6 @@ namespace Core
         private void Start()
         {
             StartDay();
-
         }
 
         private void InitializeSingleton()
@@ -40,7 +39,6 @@ namespace Core
         {
             Wallet.ClearDayEarn();
             OnDayConditionChange?.Invoke(true);
-            print("Start");
             _dayTimerRoutine = StartCoroutine(DayTimer());
         }
 
