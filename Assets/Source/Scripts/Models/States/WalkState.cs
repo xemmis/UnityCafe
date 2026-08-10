@@ -10,16 +10,18 @@ namespace Models.States
     {
         public WalkState(WalkPoint walkPoint)
         {
-            Debug.LogWarning(walkPoint == null);
             _point = walkPoint;
+            _requestedType = walkPoint != null ? walkPoint.Type : (WalkType?)null;
         }
 
         public WalkState(WalkType walkType)
         {
+            _requestedType = walkType;
             _point = WalkManager.Instance?.GetFirstFreeWalkPoint(walkType);
         }
 
-        private WalkPoint _point = new();
+        private WalkPoint _point;
+        private readonly WalkType? _requestedType;
         private Animator _animator;
         private NavMeshAgent _agent;
 
@@ -31,9 +33,16 @@ namespace Models.States
             if (_point == null)
             {
                 controller.SetEmote(EmoteType.Dissapointed, 100);
+
+                if (_requestedType == WalkType.Table)
+                    controller.Interaction?.NotifyNoFreeTable();
+
                 controller.NextState();
                 return;
             }
+
+            if (_requestedType == WalkType.Table)
+                controller.Interaction?.NotifyFoundFreeTable();
 
             controller.SetEmote(EmoteType.Happy);
             if (_point.Type != WalkType.Leave)

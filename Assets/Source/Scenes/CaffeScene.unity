@@ -182,7 +182,7 @@ PrefabInstance:
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _container
       value: 
-      objectReference: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _isEmploye
       value: 1
@@ -190,7 +190,7 @@ PrefabInstance:
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _emoteContainer
       value: 
-      objectReference: {fileID: 11400000, guid: 525edd15df21dd94380d69cb2603c080, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3289189213133702171, guid: 96e1d1ff5db0ed64581496a138b58be3, type: 3}
       propertyPath: _currentAction.<IntData>k__BackingField
       value: 150
@@ -397,7 +397,7 @@ MonoBehaviour:
   _plantData: {fileID: 11400000, guid: f424a316d7fd2d14ab9138838dbebc51, type: 2}
   _buyBtn: {fileID: 79275875}
   _seedSprite: {fileID: 0}
-  _isSolded: 0
+  _singlePurchase: 0
 --- !u!114 &28553865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1441,7 +1441,7 @@ MonoBehaviour:
   _plantData: {fileID: 11400000, guid: 22cd21657c333f64fa71f6117d20121e, type: 2}
   _buyBtn: {fileID: 1634260813}
   _seedSprite: {fileID: 0}
-  _isSolded: 0
+  _singlePurchase: 0
 --- !u!114 &122884104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8829,7 +8829,7 @@ MonoBehaviour:
   _plantData: {fileID: 11400000, guid: bf6ee85e04aced64b87730efb1f70e6a, type: 2}
   _buyBtn: {fileID: 731380644}
   _seedSprite: {fileID: 0}
-  _isSolded: 0
+  _singlePurchase: 0
 --- !u!114 &1075733697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13062,7 +13062,7 @@ MonoBehaviour:
   _plantData: {fileID: 11400000, guid: c439c8415ba324b458be9a06edc5cd9e, type: 2}
   _buyBtn: {fileID: 308216769}
   _seedSprite: {fileID: 0}
-  _isSolded: 0
+  _singlePurchase: 0
 --- !u!114 &1541765232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14947,7 +14947,7 @@ MonoBehaviour:
   _plantData: {fileID: 11400000, guid: bcd99a4c36fd1a24c81beea8f3315b07, type: 2}
   _buyBtn: {fileID: 2089828055}
   _seedSprite: {fileID: 0}
-  _isSolded: 0
+  _singlePurchase: 0
 --- !u!114 &1675418237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17169,7 +17169,7 @@ MonoBehaviour:
   _plantData: {fileID: 11400000, guid: e899c6614057b4741ad88f574b5702c9, type: 2}
   _buyBtn: {fileID: 167018311}
   _seedSprite: {fileID: 0}
-  _isSolded: 0
+  _singlePurchase: 0
 --- !u!114 &2032293897
 MonoBehaviour:
   m_ObjectHideFlags: 0

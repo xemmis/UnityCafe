@@ -14,7 +14,20 @@ namespace Core
         public static bool IsDragging { get; private set; }
         public static bool CameraControllEnabled { get; private set; }
         public static bool IsPaused { get; private set; }
+        public static event Action<bool> OnShovelModeChanged;
+        public static bool IsShovelModeEnabled { get; private set; }
 
+        public static void ChangeShovelModeCondition()
+        {
+            IsShovelModeEnabled = !IsShovelModeEnabled;
+            OnShovelModeChanged?.Invoke(IsShovelModeEnabled);
+        }
+
+        public static void ChangeShovelModeCondition(bool condition)
+        {
+            IsShovelModeEnabled = condition;
+            OnShovelModeChanged?.Invoke(IsShovelModeEnabled);
+        }
 
         public static void Pause()
         {
@@ -53,3 +66,4 @@ namespace Core
         }
     }
 }
+ 

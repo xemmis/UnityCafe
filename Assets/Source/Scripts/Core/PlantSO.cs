@@ -13,5 +13,6 @@ namespace Core
         [field: SerializeField] public int PlantCost { get; private set; } = 15;
         [field: SerializeField] public Sprite ReadyForHarvestSpr { get; private set; } = null;
         [field: SerializeField] public Sprite NotReadyForHarvestSpr { get; private set; } = null;
+        [field: SerializeField] public bool IsQuestReward { get; private set; } = false;
     }
 }

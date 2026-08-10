@@ -45,12 +45,12 @@ namespace Models.Npc
             if (_isEmploye)
                 EmployeeManager.RegisterEmployee(this);
         }
-
         public void Initialize(ActionsSO npcSO, EmoteContainer emoteContainer = null, QuestContainer questContainer = null)
         {
             _npcSO = npcSO;
             _container = emoteContainer;
-            if (_interaction != null && questContainer != null) _interaction.Initialize(questContainer);
+
+            _interaction?.ResetForSpawn(questContainer);
 
             _visualizer.Initialize(emoteContainer);
             int rand = Random.Range(0, npcSO.Actions.Count);
@@ -125,3 +125,4 @@ namespace Models.Npc
         }
     }
 }
+ 

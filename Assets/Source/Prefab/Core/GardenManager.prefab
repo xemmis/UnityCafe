@@ -47,6 +47,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1847613565399299700}
   - component: {fileID: 1862534129892669019}
+  - component: {fileID: 8986143013703402445}
   m_Layer: 0
   m_Name: GardenManager
   m_TagString: Untagged
@@ -83,6 +84,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.WishFactory
   _wishConfigs: []
+--- !u!114 &8986143013703402445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8487676100197294327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aacce80505a334b459b89c815440ef87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Models.Plant.SeedInventoryUI
+  _visualizePos: {fileID: 0}
+  _clearPos: {fileID: 0}
+  _uiPopap: {fileID: 0}
+  _openFlag: 0
+  _cells: []
 --- !u!1001 &328405873439629880
 PrefabInstance:
   m_ObjectHideFlags: 0

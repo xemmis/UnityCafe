@@ -12,7 +12,6 @@ namespace Models.Npc
     public sealed class NpcInteraction : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Sprite _npcIcon = null;
-        [SerializeField] private DialogueMood _currentMood = DialogueMood.Good;
 
         private QuestContainer _container = null;
         private QuestDialoguePair? _activeQuestPair = null;
@@ -21,18 +20,48 @@ namespace Models.Npc
         private List<FoodPrefer> _prefers = new();
         private DialogueTree _orderHint = null;
         private NpcBehaviorLogic _logic = null;
+        private NpcMood _mood = null;
+
         public bool IsWaitingFood { get; private set; } = false;
+        public DialogueMood CurrentMood => _mood.Current;
 
         private void Awake()
         {
             _logic = GetComponent<NpcBehaviorLogic>();
+
+            // Safety-net для NPC, которые не проходят через NpcFabric
+            // (например, статично размещённые сотрудники) — у них не будет
+            // вызова ResetForSpawn, поэтому настроение должно быть валидно
+            // сразу после Awake.
+            _mood = NpcMood.CreateRandom();
+            _mood.OnMoodChanged += HandleMoodChanged;
         }
 
         public void SetWaitCondition(bool condition) => IsWaitingFood = condition;
 
-        public void Initialize(QuestContainer questContainer)
+        /// <summary>
+        /// Единая точка сброса состояния при каждом "спавне" из пула.
+        /// Раньше квест назначался только если questContainer != null,
+        /// из-за чего переиспользованный NPC мог унаследовать чужой квест.
+        /// </summary>
+        public void ResetForSpawn(QuestContainer questContainer)
         {
             _container = questContainer;
+            _activeQuestPair = null;
+            _isQuestOrder = false;
+            IsWaitingFood = false;
+            _prefers.Clear();
+            _orderHint = null;
+
+            _mood = NpcMood.CreateRandom();
+            _mood.OnMoodChanged += HandleMoodChanged;
+        }
+
+        private void GrantQuestReward(QuestDialoguePair pair)
+        {
+            if (pair.RewardPlant == null) return;
+
+            SeedInventory.Add(pair.RewardPlant);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -54,11 +83,10 @@ namespace Models.Npc
                 return;
             }
 
-            DialogueSystem.Instance.StartDialogue(_currentMood, _npcIcon);
+            DialogueSystem.Instance.StartDialogue(_mood.Current, _npcIcon);
         }
 
-        // Вызывается из WaitOrderState.Enter при переходе в состояние ожидания заказа.
-        // Решает, обычный это заказ или квестовый.
+        // Вызывается из WaitOrderState.Enter
         public void AssignOrder()
         {
             if (_container != null && _container.Data.HasNextStage())
@@ -125,11 +153,13 @@ namespace Models.Npc
                 _logic.SetEmote(EmoteType.Happy, 100);
                 Wallet.AddMoney(foodItem.Cost * 2);
                 QuestSystem.Instance?.CompleteQuestStage(_container);
+                _mood.Improve();
             }
             else
             {
                 _logic.SetEmote(EmoteType.Sad, 100);
                 Wallet.AddMoney(foodItem.Cost / 2);
+                _mood.Worsen();
             }
 
             _activeQuestPair = null;
@@ -148,16 +178,36 @@ namespace Models.Npc
             {
                 _logic.SetEmote(EmoteType.Sad, 100);
                 Wallet.AddMoney(foodItem.Cost / 2);
+                _mood.Worsen();
             }
             else if (accurancy >= _prefers.Count)
             {
                 _logic.SetEmote(EmoteType.Happy, 100);
                 Wallet.AddMoney(foodItem.Cost * 2);
+                _mood.Improve();
             }
             else
             {
+                // Частичное совпадение предпочтений — не хорошо и не плохо
                 Wallet.AddMoney(foodItem.Cost);
             }
+        }
+
+        // Вызывается из WalkState при поиске свободного столика
+        public void NotifyFoundFreeTable() => _mood.Improve();
+        public void NotifyNoFreeTable() => _mood.Worsen();
+
+        private void HandleMoodChanged(DialogueMood mood)
+        {
+            EmoteType emote = mood switch
+            {
+                DialogueMood.Good => EmoteType.Happy,
+                DialogueMood.Bad => EmoteType.Angry,
+                _ => EmoteType.None
+            };
+
+            if (emote != EmoteType.None)
+                _logic.SetEmote(emote, 100);
         }
     }
 }

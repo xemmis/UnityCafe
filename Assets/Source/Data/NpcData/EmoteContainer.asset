@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c461a2ffe438b48b9930313e31a37f, type: 3}
   m_Name: EmoteContainer
   m_EditorClassIdentifier: Assembly-CSharp::Core.EmoteContainer
-  <Emotes>k__BackingField: []
+  <Emotes>k__BackingField:
+  - <Type>k__BackingField: 1
+    <Sprite>k__BackingField: {fileID: -9113014168596562804, guid: c70ce4e219a06db4c85696c5eae7e5d6, type: 3}
+  - <Type>k__BackingField: 2
+    <Sprite>k__BackingField: {fileID: -781786180380444386, guid: c70ce4e219a06db4c85696c5eae7e5d6, type: 3}
+  - <Type>k__BackingField: 3
+    <Sprite>k__BackingField: {fileID: 0}
+  - <Type>k__BackingField: 4
+    <Sprite>k__BackingField: {fileID: 0}
+  - <Type>k__BackingField: 5
+    <Sprite>k__BackingField: {fileID: 0}

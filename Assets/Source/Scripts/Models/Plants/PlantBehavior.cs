@@ -228,10 +228,38 @@ namespace Models.Plant
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (GameCondition.IsShovelModeEnabled)
+            {
+                HandleRemove();
+                return;
+            }
+
             if (_canHarvest)
                 HandleHarvest();
         }
 
+        private void HandleRemove()
+        {
+            if (_plantData == null) return; // пустой слот — нечего удалять
+
+            if (_wishRoutine != null)
+            {
+                StopCoroutine(_wishRoutine);
+                _wishRoutine = null;
+            }
+
+            _plantData = null;
+            _canHarvest = false;
+            _currentStage = null;
+            _growProgress = 0f;
+            _stagesCount = 0;
+            _currentWish = null;
+
+            if (_renderer != null)
+                _renderer.sprite = null;
+
+            _visualization?.OnHarvested(); // прячет прогресс-бар/иконку пожелания
+        }
         private void HandleHarvest()
         {
             BakeryInventory.Add(_plantData.Ingredinet, _plantData.IngredientOutput);
@@ -240,3 +268,4 @@ namespace Models.Plant
         }
     }
 }
+ 
