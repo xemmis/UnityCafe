@@ -26,3 +26,15 @@ MonoBehaviour:
       <FoodRecipe>k__BackingField: {fileID: 0}
       <FoodPrefers>k__BackingField: 
       <IntData>k__BackingField: 60
+    - <Dialogue>k__BackingField: {fileID: 0}
+      <StateType>k__BackingField: 2
+      <WalkType>k__BackingField: 0
+      <FoodRecipe>k__BackingField: {fileID: 0}
+      <FoodPrefers>k__BackingField: 
+      <IntData>k__BackingField: 60
+    - <Dialogue>k__BackingField: {fileID: 0}
+      <StateType>k__BackingField: 2
+      <WalkType>k__BackingField: 0
+      <FoodRecipe>k__BackingField: {fileID: 0}
+      <FoodPrefers>k__BackingField: 
+      <IntData>k__BackingField: 60

@@ -2,7 +2,7 @@
 - Project name: UnityCafe
 - Unity version: Unity 6000.3.10f1
 - Active game object:
-  - Name: BackGround
+  - Name: Canvas
   - Tag: Untagged
-  - Layer: UI
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

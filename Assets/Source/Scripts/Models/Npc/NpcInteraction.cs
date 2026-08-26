@@ -116,10 +116,10 @@ namespace Models.Npc
 
         private void AssignRandomOrder()
         {
-            var (prefer, hint) = OrderFactory.Instance.CreateRandomOrder();
+            var (prefers, hint) = OrderFactory.Instance.CreateRandomOrder();
 
             _prefers.Clear();
-            _prefers.Add(prefer);
+            _prefers.AddRange(prefers);
             _orderHint = hint;
             _isQuestOrder = false;
 
